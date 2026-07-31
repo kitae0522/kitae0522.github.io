@@ -6,6 +6,8 @@ const allPosts = await getCollection('posts', ({ data }) => data.published);
 const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const categories = ['daily', 'dev', 'startup', 'retrospective'] as const;
 const base = import.meta.env.BASE_URL;
+const baseWithoutTrailingSlash = base.replace(/\/$/, '');
+const postsBase = baseWithoutTrailingSlash === '' ? '/posts' : `${baseWithoutTrailingSlash}/posts`;
 ---
 
 <BaseLayout title="My Blog">
@@ -18,7 +20,7 @@ const base = import.meta.env.BASE_URL;
             .filter((post) => post.data.category === cat)
             .map((post) => (
               <li>
-                <a class="text-blue-700 hover:underline" href={`${base}posts/${post.id}`}>
+                <a class="text-blue-700 hover:underline" href={`${postsBase}/${post.id}`}>
                   {post.data.title}
                 </a>
               </li>
