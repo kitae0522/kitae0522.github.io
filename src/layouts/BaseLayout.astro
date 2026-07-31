@@ -1,0 +1,36 @@
+---
+import '../styles/global.css';
+
+type Props = {
+  title?: string;
+  description?: string;
+};
+
+const { title = 'My Blog', description = '개인 블로그' } = Astro.props as Props;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-slate-50 text-slate-900">
+    <header class="border-b border-slate-200 bg-white/90 px-4 py-4">
+      <div class="mx-auto max-w-3xl">
+        <h1 class="text-2xl font-bold">{title}</h1>
+      </div>
+    </header>
+    <main class="mx-auto flex min-h-[calc(100vh-112px)] max-w-3xl px-4 py-8">
+      <slot />
+    </main>
+    <footer class="border-t border-slate-200 px-4 py-6 text-sm text-slate-500">
+      <div class="mx-auto max-w-3xl">
+        © {new Date().getFullYear()} My Blog
+      </div>
+    </footer>
+  </body>
+</html>

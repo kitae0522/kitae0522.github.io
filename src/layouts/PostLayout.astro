@@ -1,0 +1,32 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+type Frontmatter = {
+  title: string;
+  date: Date;
+  category: 'daily' | 'dev' | 'startup' | 'retrospective';
+  tags: string[];
+  published: boolean;
+  description?: string;
+};
+
+const { frontmatter } = Astro.props as { frontmatter: Frontmatter };
+const { title, date, category, tags, description = '' } = frontmatter;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="space-y-4">
+    <header class="space-y-2 border-b border-slate-200 pb-4">
+      <h1 class="text-3xl font-bold">{title}</h1>
+      <p class="text-sm text-slate-600">
+        {category} • {date.toISOString().slice(0, 10)}
+      </p>
+      <ul class="flex flex-wrap gap-2">
+        {tags.map((tag) => <li class="rounded-full bg-slate-200 px-3 py-1 text-xs">#{tag}</li>)}
+      </ul>
+    </header>
+    <section class="prose prose-slate">
+      <slot />
+    </section>
+  </article>
+</BaseLayout>
