@@ -40,8 +40,9 @@ const formatDate = (value: Date) => value.toISOString().slice(0, 10).replaceAll(
       {description && <p class="post-summary">{description}</p>}
       <div class="post-taxonomy" aria-label="글 분류">
         <span class="taxonomy-chip taxonomy-chip--category">{category}</span>
-        {tags.map((tag) => <span class="taxonomy-chip">{tag}</span>)}
+        <span class="post-taxonomy__reading">{readingTime}분 읽기</span>
       </div>
+      {tags.length > 0 && <p class="post-tags">{tags.map((tag) => `#${tag}`).join(' · ')}</p>}
       <div class="post-byline">
         <time datetime={date.toISOString()}>{formatDate(date)}</time>
         <span class="post-byline__separator" aria-hidden="true">·</span>

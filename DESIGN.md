@@ -9,7 +9,7 @@ font: Pretendard Variable
 
 ## Direction
 
-Quiet, cool, and text-first. The home page is a simple personal index: a brief introduction followed by one narrow chronological card list. It takes the reading focus and whitespace of blog.cro.sh, with small Toss-style category and tag metadata.
+Quiet, cool, and text-first. The home page is a simple personal index: a brief introduction followed by one narrow chronological card list. It uses CRO 70% for whitespace and one-column reading flow, Toss 20% for category metadata, and AI Frontier 10% for reading-time, tag, and date scanning.
 
 Avoid paper textures, warm neutrals, decorative imagery, large cards, and visual effects. The memorable element is the calm editorial rhythm of the type and the thin rules between posts.
 
@@ -41,18 +41,18 @@ Use tight display tracking only for headings: `letter-spacing: -0.075em` for the
 
 ### Site shell
 
-- Header: white, 58px desktop / 54px mobile, thin bottom rule, `Ted Song` left, `글 · 소개` right.
-- Desktop shell: one `max-width: 920px` page frame with a centered 620px home reading column. Do not use a secondary sidebar or grid.
+- Header: white, 58px desktop / 54px mobile, thin bottom rule, `Ted Song` left, `글 · 소개` right. Use a 760px inner navigation width.
+- Desktop shell: a `max-width: 920px` pale-gray page frame with a centered 620px home reading column. Do not use a secondary sidebar or grid.
 - Mobile shell: 18px horizontal padding; compact header with menu affordance.
-- Keep home main-page vertical spacing at 82px desktop and 56px mobile.
+- Keep home main-page vertical spacing at 104px desktop and 68px mobile; use a 72px desktop / 42px mobile gap between intro and post cards.
 - Footer: thin top rule, compact copyright and GitHub link.
 
 ### Home
 
 - Use the centered 620px home reading column directly; do not add a grid, hero feature, or sidebar.
-- Intro: `Personal notes.` at 33px desktop / 30px mobile and one-line 16px description. Use no eyebrow, category marker, section heading, or home-page external links.
-- Show posts as a one-column stack of white cards: 23px/24px desktop and 20px/18px mobile card padding, 8px radius, 12px gap, thin neutral border, and a 2px hover lift.
-- Each card has small category and tag chips above its 22px desktop / 20px mobile title, then a 15px summary and 13px date. The category chip uses a pale `#e84057` background and red text; tags use neutral gray chips.
+- Intro: `Personal notes.` at 38px desktop / 33px mobile and one-line 17px desktop / 16px mobile description. Use no eyebrow, category marker, section heading, or home-page external links.
+- Show posts as a one-column stack of white cards: 25px/28px desktop and 21px/20px mobile card padding, 9px radius, 16px desktop / 12px mobile gap, thin neutral border, and a 2px hover lift.
+- Each card shows a 11px category chip plus reading time above its 24px desktop / 21px mobile title, then a 16px desktop / 15px mobile summary. The bottom metadata line has text tags and a 13px date. The category chip uses a pale `#e84057` background and red text; tags are text, not chips.
 - Show latest-first.
 
 ### Post
@@ -60,7 +60,7 @@ Use tight display tracking only for headings: `letter-spacing: -0.075em` for the
 - Desktop article measure: 690px maximum.
 - Mobile article padding: 20px; never below 17px body text.
 - Order: back link, category, title, summary, date/read-time, divider, content, previous/next links.
-- Show the same category and tag chips below the summary and before the date/read-time metadata.
+- Show the same category chip, reading time, textual tags, and date/read-time metadata below the summary.
 - Paragraph gap: 25px desktop and 22px mobile.
 - Blockquotes have a 2px `#e84057` left rule. Lists use small `#e84057` markers. Code blocks are neutral gray with horizontal scrolling.
 

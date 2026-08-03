@@ -621,6 +621,135 @@ svg {
   }
 }
 
+/* CRO 70 / Toss 20 / AI Frontier 10 home rhythm */
+body {
+  background: #f5f5f6;
+}
+
+.site-header,
+.site-footer {
+  background: var(--canvas);
+}
+
+.site-header__inner {
+  width: min(calc(100% - 48px), 760px);
+}
+
+.site-main {
+  padding-block: 104px 86px;
+}
+
+.home-page {
+  max-width: 620px;
+}
+
+.home-title {
+  font-size: 38px;
+  line-height: 1.1;
+}
+
+.home-description {
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.home-posts {
+  margin-top: 72px;
+}
+
+.post-list {
+  gap: 16px;
+}
+
+.home-card {
+  padding: 25px 28px 23px;
+  border-radius: 9px;
+}
+
+.taxonomy-chips {
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.taxonomy-chip {
+  font-size: 11px;
+}
+
+.home-card__reading,
+.post-taxonomy__reading {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.home-card__title {
+  font-size: 24px;
+  line-height: 1.28;
+}
+
+.home-card__summary {
+  margin: 8px 0 13px;
+  font-size: 16px;
+}
+
+.home-card__metadata,
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 7px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.post-tags {
+  margin-top: 12px;
+}
+
+.post-taxonomy {
+  align-items: center;
+  margin-top: 18px;
+}
+
+@media (max-width: 700px) {
+  .site-header__inner {
+    width: calc(100% - 36px);
+  }
+
+  .site-main {
+    padding-block: 68px 58px;
+  }
+
+  .home-title {
+    font-size: 33px;
+  }
+
+  .home-description {
+    font-size: 16px;
+  }
+
+  .home-posts {
+    margin-top: 42px;
+  }
+
+  .post-list {
+    gap: 12px;
+  }
+
+  .home-card {
+    padding: 21px 20px;
+  }
+
+  .home-card__title {
+    font-size: 21px;
+  }
+
+  .home-card__summary {
+    font-size: 15px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

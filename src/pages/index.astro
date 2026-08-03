@@ -8,6 +8,7 @@ const base = import.meta.env.BASE_URL;
 const baseWithoutTrailingSlash = base.replace(/\/$/, '');
 const postsBase = baseWithoutTrailingSlash === '' ? '/posts' : `${baseWithoutTrailingSlash}/posts`;
 const formatDate = (date: Date) => date.toISOString().slice(0, 10).replaceAll('-', '.');
+const getReadingTime = (body: string | undefined) => Math.max(1, Math.ceil((body ?? '').trim().split(/\s+/).filter(Boolean).length / 200));
 ---
 
 <BaseLayout title="My Blog" description="Personal notes.">
@@ -25,11 +26,20 @@ const formatDate = (date: Date) => date.toISOString().slice(0, 10).replaceAll('-
               <a class="home-card" href={`${postsBase}/${post.id}`}>
                 <div class="taxonomy-chips" aria-label="글 분류">
                   <span class="taxonomy-chip taxonomy-chip--category">{post.data.category}</span>
-                  {post.data.tags.map((tag) => <span class="taxonomy-chip">{tag}</span>)}
+                  <span class="home-card__reading">{getReadingTime(post.body)}분 읽기</span>
                 </div>
                 <h2 class="home-card__title">{post.data.title}</h2>
                 {post.data.description && <p class="home-card__summary">{post.data.description}</p>}
-                <time class="home-card__date" datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+                <div class="home-card__metadata">
+                  {post.data.tags.map((tag, index) => (
+                    <>
+                      {index > 0 && <span aria-hidden="true">·</span>}
+                      <span>#{tag}</span>
+                    </>
+                  ))}
+                  {post.data.tags.length > 0 && <span aria-hidden="true">·</span>}
+                  <time class="home-card__date" datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+                </div>
               </a>
             </li>
           ))}

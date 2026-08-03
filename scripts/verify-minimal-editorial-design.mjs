@@ -99,6 +99,13 @@ const checks = [
       !baseLayout.includes('#search') && !baseLayout.includes('#rss'),
     'the site must keep only real 글, 소개, GitHub, and Portfolio links',
   ],
+  [
+    indexPage.includes('home-card__reading') && indexPage.includes('getReadingTime') &&
+      globalCss.includes('font-size: 38px;') && globalCss.includes('padding: 25px 28px 23px;') &&
+      globalCss.includes('border-radius: 9px;') && globalCss.includes('gap: 16px;') &&
+      globalCss.includes('.home-card__metadata'),
+    'home cards must match the CRO-Toss-AI reading metadata design',
+  ],
 ];
 
 const failures = checks.filter(([passed]) => !passed).map(([, message]) => message);
