@@ -70,7 +70,7 @@ svg {
 }
 
 .site-shell {
-  width: min(calc(100% - 48px), 760px);
+  width: min(calc(100% - 48px), 720px);
   margin-inline: auto;
 }
 
@@ -81,7 +81,7 @@ svg {
 
 .site-header__inner {
   display: flex;
-  min-height: 50px;
+  min-height: 54px;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
@@ -137,8 +137,8 @@ svg {
 }
 
 .site-main {
-  min-height: calc(100vh - 106px);
-  padding-block: 40px 56px;
+  min-height: calc(100vh - 110px);
+  padding-block: 44px 34px;
 }
 
 .site-footer {
@@ -157,7 +157,7 @@ svg {
 }
 
 .home-page {
-  max-width: 640px;
+  width: 100%;
   margin-inline: 0;
 }
 
@@ -167,7 +167,7 @@ svg {
 
 .home-title {
   margin: 0;
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 700;
   line-height: 1.12;
   letter-spacing: -0.075em;
@@ -177,7 +177,7 @@ svg {
   max-width: 38ch;
   margin: 10px 0 0;
   color: var(--muted);
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.5;
 }
 
@@ -186,7 +186,7 @@ svg {
   flex-wrap: wrap;
   gap: 8px 16px;
   margin: 18px 0 0;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -212,7 +212,7 @@ svg {
 
 .home-post__link {
   display: block;
-  padding: 16px 0;
+  padding: 25px 0;
   text-decoration: none;
 }
 
@@ -227,8 +227,8 @@ svg {
 }
 
 .post-link__marker {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   flex: 0 0 auto;
   margin-top: 0.56em;
   align-self: flex-start;
@@ -242,7 +242,7 @@ svg {
 
 .home-post__title {
   margin: 0;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 650;
   line-height: 1.32;
   letter-spacing: -0.035em;
@@ -259,7 +259,7 @@ svg {
   display: block;
   margin-top: 6px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -519,7 +519,7 @@ svg {
   }
 
   .site-header__inner {
-    min-height: 46px;
+    min-height: 50px;
   }
 
   .menu-button {
@@ -534,14 +534,13 @@ svg {
   }
 
   .site-nav,
-  .footer-links,
-  .home-links {
+  .footer-links {
     font-size: 10px;
   }
 
   .site-main {
-    min-height: calc(100vh - 94px);
-    padding-block: 28px 48px;
+    min-height: calc(100vh - 98px);
+    padding-block: 35px 28px;
   }
 
   .site-footer__inner {
@@ -549,12 +548,20 @@ svg {
   }
 
   .home-title {
-    font-size: 30px;
+    font-size: 34px;
     line-height: 1.13;
   }
 
   .home-posts {
     margin-top: 28px;
+  }
+
+  .home-post__link {
+    padding: 21px 0;
+  }
+
+  .home-post__title {
+    font-size: 21px;
   }
 
   .post-category,
@@ -576,7 +583,7 @@ svg {
   }
 
   .home-post__date {
-    font-size: 11px;
+    font-size: 14px;
     line-height: 1.5;
   }
 
