@@ -84,8 +84,10 @@ const checks = [
     'index.astro must use the compact Personal notes home intro',
   ],
   [
-    globalCss.includes('.home-post__title') && globalCss.includes('font-size: 18px;') &&
-      globalCss.includes('.home-post__summary') && globalCss.includes('font-size: 14px;') &&
+    globalCss.includes('.home-title') && globalCss.includes('font-size: 32px;') &&
+      globalCss.includes('.home-post__title') && globalCss.includes('font-size: 20px;') &&
+      globalCss.includes('.home-post__summary') && globalCss.includes('font-size: 16px;') &&
+      /@media \(max-width: 700px\)[\s\S]*?\.home-title\s*\{[\s\S]*?font-size: 30px;/.test(globalCss) &&
       globalCss.includes('padding: 16px 0;'),
     'global.css must use compact home post typography and row padding',
   ],

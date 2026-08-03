@@ -28,9 +28,9 @@ Avoid paper textures, warm neutrals, decorative imagery, large cards, and visual
 | --- | ---: | ---: | ---: |
 | Post body | 18px | 17px | 1.78 / 1.82 |
 | Post title | 48px max | 34px | 1.14 / 1.17 |
-| Home title | 28px | 27px | 1.12 / 1.13 |
-| Home post title | 18px | 18px | 1.32 |
-| Home post description | 14px | 14px | 1.5 |
+| Home title | 32px | 30px | 1.12 / 1.13 |
+| Home post title | 20px | 20px | 1.32 |
+| Home post description | 16px | 16px | 1.5 |
 | Section heading | 27px | 24px | 1.33 / 1.34 |
 | Summary | 17px | 16px | 1.65 / 1.63 |
 | Metadata and navigation | 12px / 11px | 11px / 10px | 1.5 |
