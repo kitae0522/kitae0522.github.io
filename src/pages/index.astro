@@ -2,31 +2,55 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const allPosts = await getCollection('posts', ({ data }) => data.published);
-const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const categories = ['daily', 'dev', 'startup', 'retrospective'] as const;
+const allPosts = await getCollection('posts', (post) => post.data.published);
+const sortedPosts = [...allPosts].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const base = import.meta.env.BASE_URL;
 const baseWithoutTrailingSlash = base.replace(/\/$/, '');
+const homeHref = base.endsWith('/') ? base : `${base}/`;
 const postsBase = baseWithoutTrailingSlash === '' ? '/posts' : `${baseWithoutTrailingSlash}/posts`;
+const formatDate = (date: Date) => date.toISOString().slice(0, 10).replaceAll('-', '.');
 ---
 
-<BaseLayout title="My Blog">
-  <div class="space-y-10">
-    {categories.map((cat) => (
-      <section>
-        <h2 class="mb-4 text-2xl font-semibold capitalize">{cat}</h2>
-        <ul class="space-y-2">
-          {sortedPosts
-            .filter((post) => post.data.category === cat)
-            .map((post) => (
-              <li>
-                <a class="text-blue-700 hover:underline" href={`${postsBase}/${post.id}`}>
-                  {post.data.title}
-                </a>
-              </li>
-            ))}
-        </ul>
-      </section>
-    ))}
+<BaseLayout title="My Blog" description="만들고 배우며 쌓아 둔 개인 기록">
+  <div class="home-page">
+    <section class="home-intro" id="about" aria-labelledby="home-title">
+      <p class="home-intro__eyebrow"><span class="category-marker" aria-hidden="true"></span>개인 기록</p>
+      <h1 class="home-intro__title" id="home-title">조용히 쌓는 기록</h1>
+      <p class="home-intro__description">만들고 배우며 오래 남기고 싶은 생각을 짧고 꾸준하게 적습니다.</p>
+      <nav class="text-links" aria-label="관련 링크">
+        <a class="text-link" href="https://kitae0522.github.io">포트폴리오</a>
+        <a class="text-link" href="https://github.com/kitae0522">GitHub</a>
+        <a class="text-link" href={`${homeHref}#rss`}>RSS</a>
+      </nav>
+    </section>
+
+    <section class="post-index" id="posts" aria-labelledby="posts-title">
+      <div class="section-heading-row">
+        <h2 class="section-heading" id="posts-title">글</h2>
+        <span class="section-count">{sortedPosts.length}편</span>
+      </div>
+
+      {sortedPosts.length > 0 ? (
+        <ol class="post-list">
+          {sortedPosts.map((post) => (
+            <li class="post-item">
+              <a class="post-link" href={`${postsBase}/${post.id}`}>
+                <div class="post-link__meta">
+                  <span class="post-link__category">
+                    <span class="category-marker" aria-hidden="true"></span>
+                    <span>{post.data.category}</span>
+                  </span>
+                  <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+                </div>
+                <h3 class="post-link__title">{post.data.title}</h3>
+                {post.data.description && <p class="post-link__summary">{post.data.description}</p>}
+              </a>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p class="empty-posts">아직 공개된 글이 없습니다.</p>
+      )}
+    </section>
   </div>
 </BaseLayout>

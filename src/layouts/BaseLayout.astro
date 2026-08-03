@@ -7,6 +7,9 @@ type Props = {
 };
 
 const { title = 'My Blog', description = '개인 블로그' } = Astro.props as Props;
+const base = import.meta.env.BASE_URL;
+const homeHref = base.endsWith('/') ? base : `${base}/`;
+const year = new Date().getFullYear();
 ---
 
 <!doctype html>
@@ -18,18 +21,29 @@ const { title = 'My Blog', description = '개인 블로그' } = Astro.props as P
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="bg-slate-50 text-slate-900">
-    <header class="border-b border-slate-200 bg-white/90 px-4 py-4">
-      <div class="mx-auto max-w-3xl">
-        <h1 class="text-2xl font-bold">{title}</h1>
+  <body>
+    <header class="site-header">
+      <div class="site-shell site-header__inner">
+        <a class="site-logo" href={homeHref} aria-label="My Blog 홈">My Blog</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a href={`${homeHref}#posts`} aria-current={title === 'My Blog' ? 'page' : undefined}>글</a>
+          <a href={`${homeHref}#about`}>소개</a>
+          <a href={`${homeHref}#search`}>검색</a>
+        </nav>
       </div>
     </header>
-    <main class="mx-auto flex min-h-[calc(100vh-112px)] max-w-3xl px-4 py-8">
+
+    <main class="site-shell site-main">
       <slot />
     </main>
-    <footer class="border-t border-slate-200 px-4 py-6 text-sm text-slate-500">
-      <div class="mx-auto max-w-3xl">
-        © {new Date().getFullYear()} My Blog
+
+    <footer class="site-footer">
+      <div class="site-shell site-footer__inner">
+        <span>© {year} My Blog</span>
+        <nav class="footer-links" aria-label="외부 링크">
+          <a href={`${homeHref}#rss`}>RSS</a>
+          <a href="https://github.com/kitae0522">GitHub</a>
+        </nav>
       </div>
     </footer>
   </body>
