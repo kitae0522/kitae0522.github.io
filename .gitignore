@@ -2,6 +2,7 @@
 dist/
 # generated types
 .astro/
+.superpowers/
 
 # dependencies
 node_modules/
