@@ -28,6 +28,9 @@ Avoid paper textures, warm neutrals, decorative imagery, large cards, and visual
 | --- | ---: | ---: | ---: |
 | Post body | 18px | 17px | 1.78 / 1.82 |
 | Post title | 48px max | 34px | 1.14 / 1.17 |
+| Home title | 28px | 27px | 1.12 / 1.13 |
+| Home post title | 18px | 18px | 1.32 |
+| Home post description | 14px | 14px | 1.5 |
 | Section heading | 27px | 24px | 1.33 / 1.34 |
 | Summary | 17px | 16px | 1.65 / 1.63 |
 | Metadata and navigation | 12px / 11px | 11px / 10px | 1.5 |
@@ -38,17 +41,17 @@ Use tight display tracking only for headings: `letter-spacing: -0.075em` for the
 
 ### Site shell
 
-- Header: white, thin bottom rule, logo left, `글 · 소개 · 검색` right.
+- Header: white, 50px desktop / 46px mobile, thin bottom rule, `kitae.` left, `글 · 소개 · 검색` right.
 - Desktop shell: `max-width: 920px`; fixed 24px horizontal gutter.
-- Mobile shell: 20px horizontal padding; compact header with menu affordance.
-- Keep page vertical spacing compact: 48px/72px desktop and 32px/48px mobile.
-- Footer: thin top rule, copyright, RSS/GitHub links.
+- Mobile shell: 18px horizontal padding; compact header with menu affordance.
+- Keep page vertical spacing compact: 40px/56px desktop and 28px/48px mobile.
+- Footer: thin top rule, compact copyright and GitHub link.
 
 ### Home
 
 - One centered content column, maximum 458px reading/list width.
-- Intro: compact title, one-line personal description, portfolio/GitHub/RSS links.
-- Every post row has category, title, optional description, and date. Rows are separated by a 1px neutral rule.
+- Intro: `Personal notes.` title, one-line personal description, GitHub/Portfolio/RSS links. Use no eyebrow, category marker, or section heading.
+- Every post row has title, optional description, and date below. Only the first row may carry a 5px `#e84057` marker. Rows have 16px vertical padding and a 1px neutral rule.
 - Show latest-first. No category card grid.
 
 ### Post
