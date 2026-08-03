@@ -42,16 +42,16 @@ Use tight display tracking only for headings: `letter-spacing: -0.075em` for the
 ### Site shell
 
 - Header: white, 50px desktop / 46px mobile, thin bottom rule, `kitae.` left, `글 · 소개` right.
-- Desktop shell: `max-width: 760px`; fixed 24px horizontal gutter. Align the home list to the shell instead of centering a second narrow column inside it.
+- Desktop shell: one `max-width: 720px` reading column with a fixed 24px horizontal gutter. Do not nest a narrower centered home column inside it.
 - Mobile shell: 18px horizontal padding; compact header with menu affordance.
-- Keep page vertical spacing compact: 40px/56px desktop and 28px/48px mobile.
+- Header: 54px desktop / 50px mobile. Keep main-page vertical spacing at 44px/34px desktop and 35px/28px mobile.
 - Footer: thin top rule, compact copyright and GitHub link.
 
 ### Home
 
-- One left-aligned content column, maximum 640px list width.
-- Intro: `Personal notes.` title, one-line personal description, GitHub/Portfolio links. Use no eyebrow, category marker, or section heading.
-- Every post row has title, optional description, and date below. Only the first row may carry a 5px `#e84057` marker. Rows have 16px vertical padding and a 1px neutral rule.
+- Use the single 720px shell directly; no additional home width restriction.
+- Intro: `Personal notes.` at 40px desktop / 34px mobile; description at 18px desktop / 17px mobile; GitHub/Portfolio links at 14px. Use no eyebrow, category marker, or section heading.
+- Every post row has a 24px desktop / 21px mobile title, a 16px description, and a 14px date below. Only the first row may carry a 6px `#e84057` marker. Rows have 25px desktop / 21px mobile vertical padding and a 1px neutral rule.
 - Show latest-first. No category card grid.
 
 ### Post
