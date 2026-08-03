@@ -41,7 +41,7 @@ const checks = [
   ],
   [globalCss.includes('--quiet: #66666b'), 'global.css secondary text must meet AA contrast on white'],
   [
-    /@media \(max-width: 700px\)[\s\S]*?\.section-heading\s*\{[\s\S]*?font-size: 24px;/.test(globalCss),
+    /@media \(max-width: 700px\)[\s\S]*?\.post-content h1,\s*\.post-content h2\s*\{[\s\S]*?font-size: 24px;/.test(globalCss),
     'global.css must use a 24px mobile section heading',
   ],
   [
@@ -49,20 +49,58 @@ const checks = [
     'global.css must use 24px mobile article headings',
   ],
   [
-    /@media \(max-width: 700px\)[\s\S]*?\.post-link__meta,\s*\.post-byline\s*\{[\s\S]*?font-size: 11px;/.test(globalCss),
+    /@media \(max-width: 700px\)[\s\S]*?\.post-byline\s*\{[\s\S]*?font-size: 11px;/.test(globalCss) &&
+      /@media \(max-width: 700px\)[\s\S]*?\.home-post__date\s*\{[\s\S]*?font-size: 11px;/.test(globalCss),
     'global.css must use 11px mobile metadata',
   ],
   [
-    /@media \(max-width: 700px\)[\s\S]*?\.site-nav,\s*\.footer-links,\s*\.text-links\s*\{[\s\S]*?font-size: 10px;/.test(globalCss),
+    /@media \(max-width: 700px\)[\s\S]*?\.site-nav,\s*\.footer-links,\s*\.home-links\s*\{[\s\S]*?font-size: 10px;/.test(globalCss),
     'global.css must use 10px mobile navigation',
   ],
   [indexPage.includes('id="search"') && indexPage.includes('id="rss"'), 'index.astro must provide fragment targets for non-functional links'],
   [baseLayout.includes('menu-button'), 'BaseLayout.astro must expose a mobile menu affordance'],
   [
     globalCss.includes('width: min(calc(100% - 48px), 920px);') &&
-      globalCss.includes('padding-block: 48px 72px;') &&
-      /@media \(max-width: 700px\)[\s\S]*?\.site-main\s*\{[\s\S]*?padding-block: 32px 48px;/.test(globalCss),
-    'global.css must keep editorial page gutters and vertical spacing compact',
+      globalCss.includes('padding-block: 40px 56px;') &&
+      /@media \(max-width: 700px\)[\s\S]*?\.site-shell\s*\{[\s\S]*?width: calc\(100% - 36px\);/.test(globalCss) &&
+      /@media \(max-width: 700px\)[\s\S]*?\.site-main\s*\{[\s\S]*?padding-block: 28px 48px;/.test(globalCss),
+    'global.css must keep compact shell gutters and vertical spacing',
+  ],
+  [
+    globalCss.includes('min-height: 50px;') &&
+      /@media \(max-width: 700px\)[\s\S]*?\.site-header__inner\s*\{[\s\S]*?min-height: 46px;/.test(globalCss),
+    'global.css must use the compact 50px/46px header',
+  ],
+  [baseLayout.includes('>kitae.</a>') || baseLayout.includes('>kitae.</a'), 'BaseLayout.astro must use the kitae. wordmark'],
+  [
+    indexPage.includes('Personal notes.') &&
+      !indexPage.includes('home-intro__eyebrow') &&
+      !indexPage.includes('section-heading') &&
+      !indexPage.includes('section-count'),
+    'index.astro must use the compact Personal notes home intro',
+  ],
+  [
+    globalCss.includes('.home-post__title') && globalCss.includes('font-size: 18px;') &&
+      globalCss.includes('.home-post__summary') && globalCss.includes('font-size: 14px;') &&
+      globalCss.includes('padding: 16px 0;'),
+    'global.css must use compact home post typography and row padding',
+  ],
+  [
+      indexPage.includes('postIndex === 0') &&
+      indexPage.includes('post-link__marker') &&
+      !indexPage.includes('post-link__category') &&
+      indexPage.indexOf('home-post__summary') < indexPage.indexOf('home-post__date'),
+    'index.astro must show only the first marker and place date below description',
+  ],
+  [
+    globalCss.includes('.post-link__marker') &&
+      globalCss.includes('width: 5px;') &&
+      globalCss.includes('height: 5px;'),
+    'global.css must define the compact 5px home marker',
+  ],
+  [
+    baseLayout.includes('GitHub') && !baseLayout.includes('${homeHref}#rss'),
+    'BaseLayout.astro footer must stay compact with GitHub only',
   ],
 ];
 
