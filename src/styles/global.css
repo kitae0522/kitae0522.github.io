@@ -70,7 +70,7 @@ svg {
 }
 
 .site-shell {
-  width: min(calc(100% - clamp(48px, 9.2vw, 132px)), 920px);
+  width: min(calc(100% - 48px), 920px);
   margin-inline: auto;
 }
 
@@ -138,7 +138,7 @@ svg {
 
 .site-main {
   min-height: calc(100vh - 161px);
-  padding-block: 72px 96px;
+  padding-block: 48px 72px;
 }
 
 .site-footer {
@@ -547,7 +547,7 @@ svg {
 
   .site-main {
     min-height: calc(100vh - 137px);
-    padding-block: 48px 72px;
+    padding-block: 32px 48px;
   }
 
   .site-footer__inner {

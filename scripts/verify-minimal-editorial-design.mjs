@@ -58,6 +58,12 @@ const checks = [
   ],
   [indexPage.includes('id="search"') && indexPage.includes('id="rss"'), 'index.astro must provide fragment targets for non-functional links'],
   [baseLayout.includes('menu-button'), 'BaseLayout.astro must expose a mobile menu affordance'],
+  [
+    globalCss.includes('width: min(calc(100% - 48px), 920px);') &&
+      globalCss.includes('padding-block: 48px 72px;') &&
+      /@media \(max-width: 700px\)[\s\S]*?\.site-main\s*\{[\s\S]*?padding-block: 32px 48px;/.test(globalCss),
+    'global.css must keep editorial page gutters and vertical spacing compact',
+  ],
 ];
 
 const failures = checks.filter(([passed]) => !passed).map(([, message]) => message);

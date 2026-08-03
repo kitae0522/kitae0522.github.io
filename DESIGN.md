@@ -39,8 +39,9 @@ Use tight display tracking only for headings: `letter-spacing: -0.075em` for the
 ### Site shell
 
 - Header: white, thin bottom rule, logo left, `글 · 소개 · 검색` right.
-- Desktop shell: `max-width: 920px`; horizontal padding scales from 24px to 66px.
+- Desktop shell: `max-width: 920px`; fixed 24px horizontal gutter.
 - Mobile shell: 20px horizontal padding; compact header with menu affordance.
+- Keep page vertical spacing compact: 48px/72px desktop and 32px/48px mobile.
 - Footer: thin top rule, copyright, RSS/GitHub links.
 
 ### Home
