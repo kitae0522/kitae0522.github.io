@@ -60,6 +60,7 @@ Use tight display tracking only for headings: `letter-spacing: -0.075em` for the
 - Desktop article measure: 690px maximum.
 - Mobile article padding: 20px; never below 17px body text.
 - Order: back link, category, title, summary, date/read-time, divider, content, previous/next links.
+- Show the same category and tag chips below the summary and before the date/read-time metadata.
 - Paragraph gap: 25px desktop and 22px mobile.
 - Blockquotes have a 2px `#e84057` left rule. Lists use small `#e84057` markers. Code blocks are neutral gray with horizontal scrolling.
 
