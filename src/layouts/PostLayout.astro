@@ -37,7 +37,7 @@ const formatDate = (value: Date) => value.toISOString().slice(0, 10).replaceAll(
 
     <header class="post-header">
       <p class="post-category"><span class="category-marker" aria-hidden="true"></span>{category}</p>
-      <h1 class="post-title">{title}</h1>
+      <div class="post-title" role="heading" aria-level="1">{title}</div>
       {description && <p class="post-summary">{description}</p>}
       <div class="post-byline">
         <time datetime={date.toISOString()}>{formatDate(date)}</time>

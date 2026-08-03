@@ -20,8 +20,9 @@ const formatDate = (date: Date) => date.toISOString().slice(0, 10).replaceAll('-
       <nav class="text-links" aria-label="관련 링크">
         <a class="text-link" href="https://kitae0522.github.io">포트폴리오</a>
         <a class="text-link" href="https://github.com/kitae0522">GitHub</a>
-        <a class="text-link" href={`${homeHref}#rss`}>RSS</a>
+        <a class="text-link" id="rss" href={`${homeHref}#rss`}>RSS</a>
       </nav>
+      <span class="visually-hidden" id="search">검색 기능은 준비 중입니다.</span>
     </section>
 
     <section class="post-index" id="posts" aria-labelledby="posts-title">
