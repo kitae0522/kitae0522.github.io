@@ -57,7 +57,11 @@ const checks = [
     /@media \(max-width: 700px\)[\s\S]*?\.site-nav,\s*\.footer-links,\s*\.home-links\s*\{[\s\S]*?font-size: 10px;/.test(globalCss),
     'global.css must use 10px mobile navigation',
   ],
-  [indexPage.includes('id="search"') && indexPage.includes('id="rss"'), 'index.astro must provide fragment targets for non-functional links'],
+  [
+    !indexPage.includes('id="search"') && !indexPage.includes('id="rss"') &&
+      !baseLayout.includes('#search') && !baseLayout.includes('#rss'),
+    'the site must not expose non-functional search or RSS links',
+  ],
   [baseLayout.includes('menu-button'), 'BaseLayout.astro must expose a mobile menu affordance'],
   [
     globalCss.includes('width: min(calc(100% - 48px), 920px);') &&
