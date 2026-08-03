@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+const homeHref = base.endsWith('/') ? base : `${base}/`;
+---
+
+<BaseLayout
+  title="소개 | Ted Song"
+  description="Ted Song의 개인 블로그입니다."
+  pageKind="about"
+>
+  <section class="about-page" aria-labelledby="about-title">
+    <h1 class="about-page__title" id="about-title">Ted Song</h1>
+    <p class="about-page__lead">Ted Song의 개인 블로그입니다.</p>
+    <p class="about-page__body">개발, 리뷰, 회고, 아무거나 적습니다. 제가 쓰고 싶을 때 업데이트됩니다.</p>
+    <a class="back-link about-page__back-link" href={`${homeHref}#posts`}>← 글 목록</a>
+  </section>
+</BaseLayout>

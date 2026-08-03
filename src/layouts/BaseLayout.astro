@@ -4,11 +4,15 @@ import '../styles/global.css';
 type Props = {
   title?: string;
   description?: string;
+  pageKind?: 'home' | 'post' | 'about' | 'search';
 };
 
-const { title = 'My Blog', description = '개인 블로그' } = Astro.props as Props;
+const { title = 'My Blog', description = '개인 블로그', pageKind = 'post' } = Astro.props as Props;
 const base = import.meta.env.BASE_URL;
 const homeHref = base.endsWith('/') ? base : `${base}/`;
+const aboutHref = `${homeHref}about/`;
+const searchHref = `${homeHref}search/`;
+const rssHref = `${homeHref}rss.xml`;
 const year = new Date().getFullYear();
 ---
 
@@ -19,20 +23,24 @@ const year = new Date().getFullYear();
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css"
+    />
+    <link rel="alternate" type="application/rss+xml" title="Ted Song RSS" href={rssHref} />
     <title>{title}</title>
   </head>
-  <body>
+  <body class:list={{ 'home-view': pageKind === 'home' }}>
     <header class="site-header">
       <div class="site-shell site-header__inner">
         <a class="site-logo" href={homeHref} aria-label="Ted Song 홈">Ted Song</a>
         <div class="site-header__actions">
           <nav class="site-nav" aria-label="주요 메뉴">
-            <a href={`${homeHref}#posts`} aria-current={title === 'My Blog' ? 'page' : undefined}>글</a>
-            <a href={`${homeHref}#about`}>소개</a>
+            <a href={`${homeHref}#posts`} aria-current={pageKind === 'home' ? 'page' : undefined}>글</a>
+            <a href={searchHref} aria-current={pageKind === 'search' ? 'page' : undefined}>검색</a>
+            <a href={aboutHref} aria-current={pageKind === 'about' ? 'page' : undefined}>소개</a>
           </nav>
-          <button class="menu-button" type="button" disabled aria-expanded="false" aria-label="메뉴 열기">
-            <span aria-hidden="true">☰</span>
-          </button>
         </div>
       </div>
     </header>
@@ -43,8 +51,9 @@ const year = new Date().getFullYear();
 
     <footer class="site-footer">
       <div class="site-shell site-footer__inner">
-        <span>© {year} My Blog</span>
+        <span>© {year} Ted Song</span>
         <nav class="footer-links" aria-label="외부 링크">
+          <a href={rssHref}>RSS</a>
           <a href="https://github.com/kitae0522">GitHub</a>
         </nav>
       </div>

@@ -1,0 +1,111 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { categoryLabels } from '../lib/categories';
+
+const allPosts = await getCollection('posts', (post) => post.data.published);
+const posts = [...allPosts].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const base = import.meta.env.BASE_URL;
+const baseWithoutTrailingSlash = base.replace(/\/$/, '');
+const postsBase = baseWithoutTrailingSlash === '' ? '/posts' : `${baseWithoutTrailingSlash}/posts`;
+const formatDate = (date: Date) => date.toISOString().slice(0, 10).replaceAll('-', '.');
+const getReadingTime = (body: string | undefined) => Math.max(1, Math.ceil((body ?? '').trim().split(/\s+/).filter(Boolean).length / 200));
+const getSearchValue = (post: (typeof posts)[number]) => [
+  post.data.title,
+  post.data.description,
+  categoryLabels[post.data.category],
+  ...post.data.tags,
+].filter(Boolean).join(' ').normalize('NFC').toLocaleLowerCase('ko-KR');
+---
+
+<BaseLayout title="검색 | Ted Song" description="Ted Song의 글을 검색합니다." pageKind="search">
+  <section class="search-page" aria-labelledby="search-title">
+    <header class="search-page__header">
+      <h1 class="search-page__title" id="search-title">검색</h1>
+      <p class="search-page__description">제목, 요약, 카테고리, 태그로 글을 찾습니다.</p>
+    </header>
+
+    <form class="search-form" role="search">
+      <label class="search-form__label" for="search-input">글 검색</label>
+      <input
+        class="search-form__input"
+        id="search-input"
+        name="q"
+        type="search"
+        placeholder="예: 개발, 회고, 테스트"
+        autocomplete="off"
+      />
+    </form>
+
+    <p class="search-status" id="search-status" aria-live="polite">전체 {posts.length}개 글</p>
+
+    <ol class="search-results" id="search-results">
+      {posts.map((post) => (
+        <li class="search-result" data-search-item data-search-value={getSearchValue(post)}>
+          <a class="search-result__link" href={`${postsBase}/${post.id}`}>
+            <div class="search-result__meta" aria-label="글 정보">
+              <span class="search-result__category">{categoryLabels[post.data.category]}</span>
+              <span aria-hidden="true">·</span>
+              <span>{getReadingTime(post.body)}분 읽기</span>
+              <span aria-hidden="true">·</span>
+              <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+            </div>
+            <h2 class="search-result__title">{post.data.title}</h2>
+            {post.data.description && <p class="search-result__summary">{post.data.description}</p>}
+            {post.data.tags.length > 0 && (
+              <div class="search-result__tags" aria-label="태그">
+                {post.data.tags.map((tag, index) => (
+                  <>
+                    {index > 0 && <span aria-hidden="true">·</span>}
+                    <span>#{tag}</span>
+                  </>
+                ))}
+              </div>
+            )}
+          </a>
+        </li>
+      ))}
+    </ol>
+
+    <p class="search-empty" id="search-empty" hidden>일치하는 글이 없습니다.</p>
+  </section>
+
+  <script>
+    const input = document.querySelector<HTMLInputElement>('#search-input');
+    const status = document.querySelector<HTMLElement>('#search-status');
+    const empty = document.querySelector<HTMLElement>('#search-empty');
+    const items = [...document.querySelectorAll<HTMLElement>('[data-search-item]')];
+
+    const normalize = (value: string) => value.normalize('NFC').toLocaleLowerCase('ko-KR').trim();
+
+    const updateResults = () => {
+      if (!input || !status || !empty) return;
+
+      const query = normalize(input.value);
+      let resultCount = 0;
+
+      for (const item of items) {
+        const isVisible = !query || item.dataset.searchValue?.includes(query);
+        item.hidden = !isVisible;
+        if (isVisible) resultCount += 1;
+      }
+
+      empty.hidden = resultCount !== 0;
+      status.textContent = query
+        ? `“${input.value.trim()}” 검색 결과 ${resultCount}개`
+        : `전체 ${items.length}개 글`;
+
+      const url = new URL(window.location.href);
+      if (query) url.searchParams.set('q', input.value.trim());
+      else url.searchParams.delete('q');
+      window.history.replaceState({}, '', url);
+    };
+
+    if (input) {
+      const initialQuery = new URL(window.location.href).searchParams.get('q');
+      if (initialQuery) input.value = initialQuery;
+      input.addEventListener('input', updateResults);
+      updateResults();
+    }
+  </script>
+</BaseLayout>

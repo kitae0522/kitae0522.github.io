@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { categoryEntries, categoryLabels } from '../lib/categories';
 
 const allPosts = await getCollection('posts', (post) => post.data.published);
 const sortedPosts = [...allPosts].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -9,36 +10,54 @@ const baseWithoutTrailingSlash = base.replace(/\/$/, '');
 const postsBase = baseWithoutTrailingSlash === '' ? '/posts' : `${baseWithoutTrailingSlash}/posts`;
 const formatDate = (date: Date) => date.toISOString().slice(0, 10).replaceAll('-', '.');
 const getReadingTime = (body: string | undefined) => Math.max(1, Math.ceil((body ?? '').trim().split(/\s+/).filter(Boolean).length / 200));
+const categoryFilters = [{ id: 'all', label: '전체' }, ...categoryEntries];
 ---
 
-<BaseLayout title="My Blog" description="Personal notes.">
+<BaseLayout title="Personal Blog" description="개발, 리뷰, 회고, 아무거나 적습니다. 제가 쓰고 싶을 때 업데이트됩니다." pageKind="home">
   <div class="home-page">
     <section class="home-intro" id="about" aria-labelledby="home-title">
-      <h1 class="home-title" id="home-title">Personal notes.</h1>
-      <p class="home-description">기록하고, 만들고, 배우는 일을 적습니다.</p>
+      <h1 class="home-title" id="home-title">Personal Blog</h1>
+      <p class="home-description">개발, 리뷰, 회고, 아무거나 적습니다. 제가 쓰고 싶을 때 업데이트됩니다.</p>
     </section>
+
+    <nav class="home-category-filter" aria-label="카테고리로 글 보기">
+      {categoryFilters.map((category) => (
+        <button
+          class="home-category-filter__button"
+          type="button"
+          data-category-filter={category.id}
+          data-category-label={category.label}
+          aria-pressed={category.id === 'all' ? 'true' : 'false'}
+        >
+          {category.label}
+        </button>
+      ))}
+    </nav>
+
+    <p class="sr-only" id="home-filter-status" aria-live="polite">전체 {sortedPosts.length}개 글</p>
 
     <section class="home-posts" id="posts" aria-label="글 목록">
       {sortedPosts.length > 0 ? (
         <ol class="post-list">
           {sortedPosts.map((post) => (
-            <li>
+            <li data-category-item data-category={post.data.category}>
               <a class="home-card" href={`${postsBase}/${post.id}`}>
-                <div class="taxonomy-chips" aria-label="글 분류">
-                  <span class="taxonomy-chip taxonomy-chip--category">{post.data.category}</span>
-                  <span class="home-card__reading">{getReadingTime(post.body)}분 읽기</span>
+                <div class="home-card__meta" aria-label="글 정보">
+                  <span class="home-card__category">{categoryLabels[post.data.category]}</span>
+                  <span aria-hidden="true">·</span>
+                  <span>{getReadingTime(post.body)}분 읽기</span>
+                  <span aria-hidden="true">·</span>
+                  <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
                 </div>
                 <h2 class="home-card__title">{post.data.title}</h2>
                 {post.data.description && <p class="home-card__summary">{post.data.description}</p>}
-                <div class="home-card__metadata">
+                <div class="home-card__tags" aria-label="태그">
                   {post.data.tags.map((tag, index) => (
                     <>
                       {index > 0 && <span aria-hidden="true">·</span>}
                       <span>#{tag}</span>
                     </>
                   ))}
-                  {post.data.tags.length > 0 && <span aria-hidden="true">·</span>}
-                  <time class="home-card__date" datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
                 </div>
               </a>
             </li>
@@ -49,4 +68,48 @@ const getReadingTime = (body: string | undefined) => Math.max(1, Math.ceil((body
       )}
     </section>
   </div>
+
+  <script>
+    const filterButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-category-filter]')];
+    const postItems = [...document.querySelectorAll<HTMLElement>('[data-category-item]')];
+    const status = document.querySelector<HTMLElement>('#home-filter-status');
+
+    const updateCategory = (categoryId: string) => {
+      const selectedButton = filterButtons.find((button) => button.dataset.categoryFilter === categoryId)
+        ?? filterButtons[0];
+      if (!selectedButton) return;
+
+      const selectedCategory = selectedButton.dataset.categoryFilter ?? 'all';
+      let visibleCount = 0;
+
+      for (const item of postItems) {
+        const isVisible = selectedCategory === 'all' || item.dataset.category === selectedCategory;
+        item.hidden = !isVisible;
+        if (isVisible) visibleCount += 1;
+      }
+
+      for (const button of filterButtons) {
+        button.setAttribute('aria-pressed', String(button === selectedButton));
+      }
+
+      if (status) {
+        const label = selectedButton.dataset.categoryLabel ?? '전체';
+        status.textContent = selectedCategory === 'all'
+          ? `전체 ${visibleCount}개 글`
+          : `${label} ${visibleCount}개 글`;
+      }
+
+      const url = new URL(window.location.href);
+      if (selectedCategory === 'all') url.searchParams.delete('category');
+      else url.searchParams.set('category', selectedCategory);
+      window.history.replaceState({}, '', url);
+    };
+
+    for (const button of filterButtons) {
+      button.addEventListener('click', () => updateCategory(button.dataset.categoryFilter ?? 'all'));
+    }
+
+    const initialCategory = new URL(window.location.href).searchParams.get('category');
+    updateCategory(initialCategory ?? 'all');
+  </script>
 </BaseLayout>

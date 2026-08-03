@@ -1,10 +1,11 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import { categoryLabels, type PostCategory } from '../lib/categories';
 
 type Frontmatter = {
   title: string;
   date: Date;
-  category: 'daily' | 'dev' | 'startup' | 'retrospective';
+  category: PostCategory;
   tags: string[];
   published: boolean;
   description?: string;
@@ -31,22 +32,22 @@ const postsBase = baseWithoutTrailingSlash === '' ? '/posts' : `${baseWithoutTra
 const formatDate = (value: Date) => value.toISOString().slice(0, 10).replaceAll('-', '.');
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} pageKind="post">
   <article class="post-page">
     <a class="back-link" href={`${homeHref}#posts`}>← 글 목록</a>
 
     <header class="post-header">
       <div class="post-title" role="heading" aria-level="1">{title}</div>
       {description && <p class="post-summary">{description}</p>}
-      <div class="post-taxonomy" aria-label="글 분류">
-        <span class="taxonomy-chip taxonomy-chip--category">{category}</span>
-        <span class="post-taxonomy__reading">{readingTime}분 읽기</span>
+      <div class="post-category" aria-label="글 분류">
+        <span class="post-category__name">{categoryLabels[category]}</span>
+        <span class="post-category__separator" aria-hidden="true">·</span>
+        <span>{readingTime}분 읽기</span>
       </div>
-      {tags.length > 0 && <p class="post-tags">{tags.map((tag) => `#${tag}`).join(' · ')}</p>}
-      <div class="post-byline">
+      <div class="post-metadata" aria-label="글 정보">
+        {tags.length > 0 && <span class="post-tags">{tags.map((tag) => `#${tag}`).join(' · ')}</span>}
+        {tags.length > 0 && <span class="post-metadata__separator" aria-hidden="true">·</span>}
         <time datetime={date.toISOString()}>{formatDate(date)}</time>
-        <span class="post-byline__separator" aria-hidden="true">·</span>
-        <span>읽는 시간 약 {readingTime}분</span>
       </div>
     </header>
 
