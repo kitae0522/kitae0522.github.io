@@ -23,7 +23,7 @@ type Props = {
 };
 
 const { frontmatter, previous, next, readingTime = 1 } = Astro.props as Props;
-const { title, date, category, description = '' } = frontmatter;
+const { title, date, category, tags, description = '' } = frontmatter;
 const base = import.meta.env.BASE_URL;
 const baseWithoutTrailingSlash = base.replace(/\/$/, '');
 const homeHref = base.endsWith('/') ? base : `${base}/`;
@@ -36,9 +36,12 @@ const formatDate = (value: Date) => value.toISOString().slice(0, 10).replaceAll(
     <a class="back-link" href={`${homeHref}#posts`}>← 글 목록</a>
 
     <header class="post-header">
-      <p class="post-category"><span class="category-marker" aria-hidden="true"></span>{category}</p>
       <div class="post-title" role="heading" aria-level="1">{title}</div>
       {description && <p class="post-summary">{description}</p>}
+      <div class="post-taxonomy" aria-label="글 분류">
+        <span class="taxonomy-chip taxonomy-chip--category">{category}</span>
+        {tags.map((tag) => <span class="taxonomy-chip">{tag}</span>)}
+      </div>
       <div class="post-byline">
         <time datetime={date.toISOString()}>{formatDate(date)}</time>
         <span class="post-byline__separator" aria-hidden="true">·</span>

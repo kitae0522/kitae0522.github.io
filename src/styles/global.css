@@ -70,7 +70,7 @@ svg {
 }
 
 .site-shell {
-  width: min(calc(100% - 48px), 720px);
+  width: min(calc(100% - 48px), 920px);
   margin-inline: auto;
 }
 
@@ -81,7 +81,7 @@ svg {
 
 .site-header__inner {
   display: flex;
-  min-height: 54px;
+  min-height: 58px;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
@@ -629,5 +629,127 @@ svg {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+}
+
+/* Reader-first home cards */
+.site-main {
+  padding-block: 82px;
+}
+
+.home-page {
+  max-width: 620px;
+  margin-inline: auto;
+}
+
+.home-title {
+  font-size: 33px;
+}
+
+.home-description {
+  font-size: 16px;
+}
+
+.home-posts {
+  margin-top: 42px;
+}
+
+.post-list {
+  display: grid;
+  gap: 12px;
+  border: 0;
+}
+
+.home-card {
+  display: block;
+  padding: 23px 24px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--canvas);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.home-card:hover {
+  border-color: #d4d4d9;
+  background: #fdfdfd;
+  transform: translateY(-2px);
+}
+
+.taxonomy-chips,
+.post-taxonomy {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.taxonomy-chips {
+  margin-bottom: 11px;
+}
+
+.taxonomy-chip {
+  border-radius: 6px;
+  background: #f0f0f2;
+  color: var(--muted);
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.taxonomy-chip--category {
+  background: #fff0f2;
+  color: var(--accent);
+}
+
+.home-card__title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 650;
+  line-height: 1.3;
+  letter-spacing: -0.06em;
+}
+
+.home-card__summary {
+  margin: 7px 0 10px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.home-card__date {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.post-taxonomy {
+  margin-top: 18px;
+}
+
+@media (max-width: 700px) {
+  .site-shell {
+    width: calc(100% - 36px);
+  }
+
+  .site-header__inner {
+    min-height: 54px;
+  }
+
+  .site-main {
+    padding-block: 56px;
+  }
+
+  .home-title {
+    font-size: 30px;
+  }
+
+  .home-card {
+    padding: 20px 18px;
+  }
+
+  .home-card__title {
+    font-size: 20px;
   }
 }

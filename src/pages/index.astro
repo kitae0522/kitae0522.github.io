@@ -6,7 +6,6 @@ const allPosts = await getCollection('posts', (post) => post.data.published);
 const sortedPosts = [...allPosts].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const base = import.meta.env.BASE_URL;
 const baseWithoutTrailingSlash = base.replace(/\/$/, '');
-const homeHref = base.endsWith('/') ? base : `${base}/`;
 const postsBase = baseWithoutTrailingSlash === '' ? '/posts' : `${baseWithoutTrailingSlash}/posts`;
 const formatDate = (date: Date) => date.toISOString().slice(0, 10).replaceAll('-', '.');
 ---
@@ -16,26 +15,21 @@ const formatDate = (date: Date) => date.toISOString().slice(0, 10).replaceAll('-
     <section class="home-intro" id="about" aria-labelledby="home-title">
       <h1 class="home-title" id="home-title">Personal notes.</h1>
       <p class="home-description">기록하고, 만들고, 배우는 일을 적습니다.</p>
-      <nav class="home-links" aria-label="관련 링크">
-        <a class="text-link" href="https://github.com/kitae0522">GitHub</a>
-        <a class="text-link" href="https://kitae0522.github.io">Portfolio</a>
-      </nav>
     </section>
 
     <section class="home-posts" id="posts" aria-label="글 목록">
       {sortedPosts.length > 0 ? (
         <ol class="post-list">
-          {sortedPosts.map((post, postIndex) => (
-            <li class="home-post">
-              <a class="home-post__link" href={`${postsBase}/${post.id}`}>
-                <div class="home-post__row">
-                  {postIndex === 0 && <span class="post-link__marker" aria-hidden="true"></span>}
-                  <div class="home-post__body">
-                    <h2 class="home-post__title">{post.data.title}</h2>
-                    {post.data.description && <p class="home-post__summary">{post.data.description}</p>}
-                    <time class="home-post__date" datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
-                  </div>
+          {sortedPosts.map((post) => (
+            <li>
+              <a class="home-card" href={`${postsBase}/${post.id}`}>
+                <div class="taxonomy-chips" aria-label="글 분류">
+                  <span class="taxonomy-chip taxonomy-chip--category">{post.data.category}</span>
+                  {post.data.tags.map((tag) => <span class="taxonomy-chip">{tag}</span>)}
                 </div>
+                <h2 class="home-card__title">{post.data.title}</h2>
+                {post.data.description && <p class="home-card__summary">{post.data.description}</p>}
+                <time class="home-card__date" datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
               </a>
             </li>
           ))}

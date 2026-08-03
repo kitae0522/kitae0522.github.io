@@ -64,22 +64,21 @@ const checks = [
   ],
   [baseLayout.includes('menu-button'), 'BaseLayout.astro must expose a mobile menu affordance'],
   [
-    globalCss.includes('width: min(calc(100% - 48px), 720px);') &&
-      globalCss.includes('padding-block: 44px 34px;') &&
+    globalCss.includes('width: min(calc(100% - 48px), 920px);') &&
       /@media \(max-width: 700px\)[\s\S]*?\.site-shell\s*\{[\s\S]*?width: calc\(100% - 36px\);/.test(globalCss) &&
       /@media \(max-width: 700px\)[\s\S]*?\.site-main\s*\{[\s\S]*?padding-block: 35px 28px;/.test(globalCss),
-    'global.css must keep compact shell gutters and vertical spacing',
+    'global.css must keep the reader-first shell gutters',
   ],
   [
-    globalCss.includes('.home-page') && !/\.home-page\s*\{[^}]*max-width:/.test(globalCss),
-    'global.css must use the single 720px shell without a narrowed home column',
+    /\.home-page\s*\{[^}]*max-width: 620px;[^}]*margin-inline: auto;/.test(globalCss),
+    'global.css must use a centered 620px home reading column',
   ],
   [
-    globalCss.includes('min-height: 54px;') &&
-      /@media \(max-width: 700px\)[\s\S]*?\.site-header__inner\s*\{[\s\S]*?min-height: 50px;/.test(globalCss),
-    'global.css must use the reference 54px/50px header',
+    globalCss.includes('min-height: 58px;') &&
+      /@media \(max-width: 700px\)[\s\S]*?\.site-header__inner\s*\{[\s\S]*?min-height: 54px;/.test(globalCss),
+    'global.css must use the reader-first 58px/54px header',
   ],
-  [baseLayout.includes('>kitae.</a>') || baseLayout.includes('>kitae.</a'), 'BaseLayout.astro must use the kitae. wordmark'],
+  [baseLayout.includes('>Ted Song</a>') || baseLayout.includes('>Ted Song</a'), 'BaseLayout.astro must use the Ted Song wordmark'],
   [
     indexPage.includes('Personal notes.') &&
       !indexPage.includes('home-intro__eyebrow') &&
@@ -88,32 +87,15 @@ const checks = [
     'index.astro must use the compact Personal notes home intro',
   ],
   [
-    globalCss.includes('.home-title') && globalCss.includes('font-size: 40px;') &&
-      globalCss.includes('.home-description') && globalCss.includes('font-size: 18px;') &&
-      globalCss.includes('.home-links') && globalCss.includes('font-size: 14px;') &&
-      globalCss.includes('.home-post__title') && globalCss.includes('font-size: 24px;') &&
-      globalCss.includes('.home-post__summary') && globalCss.includes('font-size: 16px;') &&
-      globalCss.includes('.home-post__date') && globalCss.includes('font-size: 14px;') &&
-      /@media \(max-width: 700px\)[\s\S]*?\.home-title\s*\{[\s\S]*?font-size: 34px;/.test(globalCss) &&
-      /@media \(max-width: 700px\)[\s\S]*?\.home-post__title\s*\{[\s\S]*?font-size: 21px;/.test(globalCss) &&
-      globalCss.includes('padding: 25px 0;') &&
-      /@media \(max-width: 700px\)[\s\S]*?\.home-post__link\s*\{[\s\S]*?padding: 21px 0;/.test(globalCss),
-    'global.css must match reference home typography and row spacing',
-  ],
-  [
-      indexPage.includes('postIndex === 0') &&
-      indexPage.includes('post-link__marker') &&
-      !indexPage.includes('post-link__category') &&
-      indexPage.indexOf('home-post__summary') < indexPage.indexOf('home-post__date'),
-    'index.astro must show only the first marker and place date below description',
-  ],
-  [
-    /\.post-link__marker\s*\{[^}]*width: 6px;[^}]*height: 6px;/.test(globalCss),
-    'global.css must define the reference 6px home marker',
+    globalCss.includes('font-size: 33px;') && globalCss.includes('font-size: 30px;') &&
+      globalCss.includes('.home-card') && globalCss.includes('border-radius: 8px;') &&
+      globalCss.includes('translateY(-2px)') && globalCss.includes('.taxonomy-chip--category') &&
+      indexPage.includes('taxonomy-chip') && postLayout.includes('post-taxonomy'),
+    'home and article layouts must render reader-first cards and taxonomy chips',
   ],
   [
     baseLayout.includes('>글</a>') && baseLayout.includes('>소개</a>') &&
-      indexPage.includes('>GitHub</a>') && indexPage.includes('>Portfolio</a>') &&
+      !indexPage.includes('>GitHub</a>') && !indexPage.includes('>Portfolio</a>') &&
       !baseLayout.includes('#search') && !baseLayout.includes('#rss'),
     'the site must keep only real 글, 소개, GitHub, and Portfolio links',
   ],
