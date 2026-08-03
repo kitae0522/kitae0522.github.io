@@ -70,7 +70,7 @@ svg {
 }
 
 .site-shell {
-  width: min(calc(100% - 48px), 920px);
+  width: min(calc(100% - 48px), 760px);
   margin-inline: auto;
 }
 
@@ -157,8 +157,8 @@ svg {
 }
 
 .home-page {
-  max-width: 458px;
-  margin-inline: auto;
+  max-width: 640px;
+  margin-inline: 0;
 }
 
 .home-intro {

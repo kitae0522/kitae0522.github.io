@@ -64,11 +64,16 @@ const checks = [
   ],
   [baseLayout.includes('menu-button'), 'BaseLayout.astro must expose a mobile menu affordance'],
   [
-    globalCss.includes('width: min(calc(100% - 48px), 920px);') &&
+    globalCss.includes('width: min(calc(100% - 48px), 760px);') &&
       globalCss.includes('padding-block: 40px 56px;') &&
       /@media \(max-width: 700px\)[\s\S]*?\.site-shell\s*\{[\s\S]*?width: calc\(100% - 36px\);/.test(globalCss) &&
       /@media \(max-width: 700px\)[\s\S]*?\.site-main\s*\{[\s\S]*?padding-block: 28px 48px;/.test(globalCss),
     'global.css must keep compact shell gutters and vertical spacing',
+  ],
+  [
+    globalCss.includes('.home-page') && globalCss.includes('max-width: 640px;') &&
+      globalCss.includes('margin-inline: 0;'),
+    'global.css must avoid double-centering the home column',
   ],
   [
     globalCss.includes('min-height: 50px;') &&
