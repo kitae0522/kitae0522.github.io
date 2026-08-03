@@ -45,6 +45,10 @@ const checks = [
     'global.css must use a 24px mobile section heading',
   ],
   [
+    /@media \(max-width: 700px\)[\s\S]*?\.post-content h1,\s*\.post-content h2\s*\{[\s\S]*?font-size: 24px;/.test(globalCss),
+    'global.css must use 24px mobile article headings',
+  ],
+  [
     /@media \(max-width: 700px\)[\s\S]*?\.post-link__meta,\s*\.post-byline\s*\{[\s\S]*?font-size: 11px;/.test(globalCss),
     'global.css must use 11px mobile metadata',
   ],
