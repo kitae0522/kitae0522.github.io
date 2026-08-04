@@ -1,0 +1,9 @@
+{
+  "id": "blog-terminal",
+  "name": "Blog Terminal",
+  "version": "1.0.0",
+  "minAppVersion": "1.5.0",
+  "description": "Opens macOS Terminal at the blog vault folder.",
+  "author": "Ted Song",
+  "isDesktopOnly": true
+}

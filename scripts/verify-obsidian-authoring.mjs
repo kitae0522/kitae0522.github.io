@@ -20,8 +20,11 @@ const pluginPath = '.obsidian/plugins/blog-new-post-template/main.js';
 const manifestPath = '.obsidian/plugins/blog-new-post-template/manifest.json';
 const corePath = '.obsidian/plugins/blog-new-post-template/plugin-core.cjs';
 const pluginPackagePath = '.obsidian/plugins/blog-new-post-template/package.json';
+const terminalPluginPath = '.obsidian/plugins/blog-terminal/main.js';
+const terminalManifestPath = '.obsidian/plugins/blog-terminal/manifest.json';
+const terminalPackagePath = '.obsidian/plugins/blog-terminal/package.json';
 
-for (const path of [appPath, pluginsPath, hotkeysPath, templatePath, pluginPath, manifestPath, corePath, pluginPackagePath, 'src/content/images/.gitkeep']) {
+for (const path of [appPath, pluginsPath, hotkeysPath, templatePath, pluginPath, manifestPath, corePath, pluginPackagePath, terminalPluginPath, terminalManifestPath, terminalPackagePath, 'src/content/images/.gitkeep']) {
   check(existsSync(resolve(root, path)), `${path} must exist`);
 }
 
@@ -31,6 +34,8 @@ if (failures.length === 0) {
   const hotkeys = readJson(hotkeysPath);
   const manifest = readJson(manifestPath);
   const pluginPackage = readJson(pluginPackagePath);
+  const terminalManifest = readJson(terminalManifestPath);
+  const terminalPackage = readJson(terminalPackagePath);
   const core = require(resolve(root, corePath));
   const rendered = core.renderTemplate('2026-08-04');
 
@@ -38,12 +43,18 @@ if (failures.length === 0) {
   check(app.attachmentFolderPath === 'src/content/images', 'dragged images must go to src/content/images');
   check(app.useMarkdownLinks === true && app.newLinkFormat === 'relative', 'Obsidian must emit standard relative Markdown image links');
   check(plugins.includes('blog-new-post-template'), 'the blog template plugin must be enabled in this vault');
+  check(plugins.includes('blog-terminal'), 'the blog terminal plugin must be enabled in this vault');
   check(
     hotkeys['blog-new-post-template:new-blog-post']?.some((hotkey) => hotkey.key === 'n' && hotkey.modifiers?.includes('Mod')),
     'Cmd+N must trigger the blog new-post command',
   );
   check(manifest.id === 'blog-new-post-template', 'the template plugin manifest must use the configured id');
   check(pluginPackage.type === 'commonjs', 'the local Obsidian plugin must remain CommonJS inside Astro projects');
+  check(terminalManifest.id === 'blog-terminal' && terminalManifest.isDesktopOnly === true, 'the terminal plugin must be a desktop-only local plugin');
+  check(terminalPackage.type === 'commonjs', 'the terminal plugin must remain CommonJS inside Astro projects');
+  const terminalPluginSource = read(terminalPluginPath);
+  check(terminalPluginSource.includes("spawn('open', ['-a', 'Terminal', vaultPath]"), 'the terminal plugin must open macOS Terminal in the vault folder');
+  check(!terminalPluginSource.includes('git push') && !terminalPluginSource.includes('git commit'), 'the terminal plugin must never publish automatically');
   check(!read(pluginPath).includes("require('./plugin-core.cjs')"), 'the Obsidian plugin must bundle its helpers into main.js');
   const pluginSource = read(pluginPath);
   const categoryIds = ['dev', 'review', 'retrospective', 'investment', 'daily', 'thought', 'career', 'other'];
