@@ -49,6 +49,7 @@ if (failures.length === 0) {
   const categoryIds = ['dev', 'review', 'retrospective', 'investment', 'daily', 'thought', 'career', 'other'];
   check(pluginSource.includes('FuzzySuggestModal'), 'Cmd+N must offer a category picker before creating a post');
   check(categoryIds.every((id) => pluginSource.includes(`id: '${id}'`)), 'the category picker must include all blog categories');
+  check(!pluginSource.includes('renderSuggestion('), 'the category picker must use Obsidian\'s native suggestion renderer');
   check(read(templatePath).includes('{{date}}') && read(templatePath).includes('published: false'), 'the editable post template must include date and draft defaults');
   check(read(templatePath).includes('category: {{category}}'), 'the editable post template must receive the selected category');
   check(rendered.includes('date: 2026-08-04') && rendered.includes('category: other') && !rendered.includes('{{date}}'), 'new posts must receive a dated frontmatter snippet');

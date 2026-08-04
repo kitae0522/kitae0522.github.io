@@ -44,10 +44,6 @@ class CategorySuggestModal extends FuzzySuggestModal {
     return `${item.label} ${item.id}`;
   }
 
-  renderSuggestion(item, element) {
-    element.setText(`${item.label} · ${item.id}`);
-  }
-
   onChooseItem(item) {
     this.didChoose = true;
     this.onChoose(item);
