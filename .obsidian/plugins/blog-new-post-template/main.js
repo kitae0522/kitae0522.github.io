@@ -12,6 +12,7 @@ module.exports = class BlogNewPostTemplatePlugin extends Plugin {
     this.addCommand({
       id: 'new-blog-post',
       name: '새 블로그 글 만들기',
+      hotkeys: [{ modifiers: ['Mod'], key: 'n' }],
       callback: () => this.createPost(),
     });
 

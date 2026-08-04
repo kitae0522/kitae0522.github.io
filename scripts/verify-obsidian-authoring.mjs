@@ -37,14 +37,14 @@ if (failures.length === 0) {
   check(app.useMarkdownLinks === true && app.newLinkFormat === 'relative', 'Obsidian must emit standard relative Markdown image links');
   check(plugins.includes('blog-new-post-template'), 'the blog template plugin must be enabled in this vault');
   check(
-    hotkeys['blog-new-post-template:new-blog-post']?.some((hotkey) => hotkey.key === 'N' && hotkey.modifiers?.includes('Mod')),
+    hotkeys['blog-new-post-template:new-blog-post']?.some((hotkey) => hotkey.key === 'n' && hotkey.modifiers?.includes('Mod')),
     'Cmd+N must trigger the blog new-post command',
   );
   check(manifest.id === 'blog-new-post-template', 'the template plugin manifest must use the configured id');
   check(read(templatePath).includes('{{date}}') && read(templatePath).includes('published: false'), 'the editable post template must include date and draft defaults');
   check(rendered.includes('date: 2026-08-04') && rendered.includes('category: other') && !rendered.includes('{{date}}'), 'new posts must receive a dated frontmatter snippet');
   check(core.isBlankPost('src/content/posts/new-note.md', '   ') && !core.isBlankPost('notes/new-note.md', ''), 'only blank posts receive the automatic template');
-  check(read(pluginPath).includes('onLayoutReady') && read(pluginPath).includes("addCommand({") && read(pluginPath).includes("vault.on('create'"), 'the plugin must safely create and populate new post notes');
+  check(read(pluginPath).includes('onLayoutReady') && read(pluginPath).includes("addCommand({") && read(pluginPath).includes("hotkeys: [{ modifiers: ['Mod'], key: 'n' }]") && read(pluginPath).includes("vault.on('create'"), 'the plugin must safely create and populate new post notes');
 }
 
 if (failures.length > 0) {
