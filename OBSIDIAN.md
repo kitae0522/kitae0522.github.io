@@ -15,3 +15,9 @@ Obsidian Settings → Core plugins에서 `Templates`만 켭니다. Templates 설
 본문에 이미지를 드래그하면 `src/content/images/`에 저장되고 상대 Markdown 링크가 삽입됩니다.
 
 본문을 작성한 뒤 공개할 때만 `published: true`로 바꿉니다. 발행은 자동이 아닙니다. Git으로 commit/push한 뒤 Pages 배포를 확인합니다.
+
+## Git 동기화
+
+Obsidian Git 플러그인이 이 Mac에 설치되어 있습니다. Vault를 다시 열면 시작 시 원격 변경을 pull합니다.
+
+글을 다 쓴 뒤 `Cmd + Option + S`를 누르면 `Commit-and-sync`가 실행됩니다. Obsidian 안에서 commit, pull, push까지 처리합니다. 같은 저장소에 코드 변경도 있으므로 시간 기반 자동 commit/push는 사용하지 않습니다.

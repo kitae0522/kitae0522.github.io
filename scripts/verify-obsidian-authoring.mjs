@@ -17,8 +17,8 @@ check(existsSync(obsidianGuidePath), 'Obsidian authoring documentation must exis
 check(existsSync(templatePath), 'the native Obsidian post template must exist');
 check(!existsSync(join(root, 'raycast')), 'the Raycast command directory must be removed');
 check(!existsSync(join(root, 'scripts/create-post.mjs')), 'the Raycast-only post generator must be removed');
-check(!existsSync(join(root, '.obsidian/plugins')), 'Obsidian community plugins must stay removed');
-check(!existsSync(join(root, '.obsidian/community-plugins.json')), 'Obsidian community plugin registration must stay removed');
+check(!existsSync(join(root, '.obsidian/plugins/blog-new-post-template')), 'the retired new-post community plugin must stay removed');
+check(!existsSync(join(root, '.obsidian/plugins/blog-terminal')), 'the retired terminal community plugin must stay removed');
 
 if (existsSync(appConfigPath)) {
   const config = JSON.parse(readFileSync(appConfigPath, 'utf8'));

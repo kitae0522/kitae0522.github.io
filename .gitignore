@@ -23,3 +23,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Local Obsidian extensions and personal shortcuts
+.obsidian/community-plugins.json
+.obsidian/hotkeys.json
+.obsidian/plugins/
