@@ -1,8 +1,0 @@
-{
-  "blog-new-post-template:new-blog-post": [
-    {
-      "modifiers": ["Mod"],
-      "key": "n"
-    }
-  ]
-}

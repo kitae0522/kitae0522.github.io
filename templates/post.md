@@ -1,8 +1,8 @@
 ---
-title: ""
+title: {{title}}
 date: {{date}}
 category: {{category}}
-tags: []
+{{tags}}
 published: false
-description: ""
+description: {{description}}
 ---

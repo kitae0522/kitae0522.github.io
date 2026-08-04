@@ -1,9 +1,0 @@
-{
-  "id": "blog-new-post-template",
-  "name": "Blog New Post Template",
-  "version": "1.0.0",
-  "minAppVersion": "1.5.0",
-  "description": "Creates a dated blog draft in the Astro posts folder.",
-  "author": "Ted Song",
-  "isDesktopOnly": false
-}
