@@ -44,6 +44,7 @@ if (failures.length === 0) {
   );
   check(manifest.id === 'blog-new-post-template', 'the template plugin manifest must use the configured id');
   check(pluginPackage.type === 'commonjs', 'the local Obsidian plugin must remain CommonJS inside Astro projects');
+  check(!read(pluginPath).includes("require('./plugin-core.cjs')"), 'the Obsidian plugin must bundle its helpers into main.js');
   check(read(templatePath).includes('{{date}}') && read(templatePath).includes('published: false'), 'the editable post template must include date and draft defaults');
   check(rendered.includes('date: 2026-08-04') && rendered.includes('category: other') && !rendered.includes('{{date}}'), 'new posts must receive a dated frontmatter snippet');
   check(core.isBlankPost('src/content/posts/new-note.md', '   ') && !core.isBlankPost('notes/new-note.md', ''), 'only blank posts receive the automatic template');
