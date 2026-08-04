@@ -1,8 +1,8 @@
 ---
-title: {{title}}
-date: {{date}}
-category: {{category}}
-{{tags}}
+title: "{{title}}"
+date: "{{date}}"
+category: "dev"
+tags: []
 published: false
-description: {{description}}
+description: ""
 ---

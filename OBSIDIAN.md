@@ -4,9 +4,9 @@
 
 ## 새 글
 
-Raycast Settings → Script Commands → Add Script Directory에서 이 저장소의 `raycast/` 폴더를 한 번 추가합니다.
+Obsidian Settings → Core plugins에서 `Templates`만 켭니다. Templates 설정의 `Template folder location`은 `templates`로 지정합니다.
 
-Raycast에서 `새 블로그 글`을 실행하면 제목, 카테고리, 태그, 목록 설명을 입력받고 `src/content/posts/`에 초안을 만든 뒤 Obsidian으로 엽니다. 명령에 단축키도 연결할 수 있습니다.
+`Cmd + N`으로 새 글을 만듭니다. 파일 이름을 글 제목으로 바꾼 뒤 `Cmd + P` → `Templates: Insert template` → `post`를 고릅니다. 원하면 `Templates: Insert template`에 단축키를 직접 연결합니다.
 
 유효한 카테고리: `dev`, `review`, `retrospective`, `investment`, `daily`, `thought`, `career`, `other`.
 
