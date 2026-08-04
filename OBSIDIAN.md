@@ -1,12 +1,10 @@
 # Obsidian 글 작성
 
-이 저장소 폴더(`/Users/ted/Developer/blog`)를 Obsidian vault로 엽니다. 커뮤니티 플러그인은 사용하지 않습니다.
+이 저장소 폴더(`/Users/ted/Developer/blog`)를 Obsidian vault로 엽니다. `Blog New Post Template`과 Obsidian Git만 사용합니다.
 
 ## 새 글
 
-Obsidian Settings → Core plugins에서 `Templates`만 켭니다. Templates 설정의 `Template folder location`은 `templates`로 지정합니다.
-
-`Cmd + N`으로 새 글을 만듭니다. 파일 이름을 글 제목으로 바꾼 뒤 `Cmd + P` → `Templates: Insert template` → `post`를 고릅니다. 원하면 `Templates: Insert template`에 단축키를 직접 연결합니다.
+`Cmd + N`을 누르고 카테고리를 고릅니다. 날짜·카테고리·공개 상태가 채워진 초안이 `src/content/posts/`에 생성됩니다.
 
 유효한 카테고리: `dev`, `review`, `retrospective`, `investment`, `daily`, `thought`, `career`, `other`.
 
