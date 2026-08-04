@@ -55,6 +55,46 @@ if (failures.length === 0) {
   check(rendered.includes('date: 2026-08-04') && rendered.includes('category: other') && !rendered.includes('{{date}}'), 'new posts must receive a dated frontmatter snippet');
   check(core.isBlankPost('src/content/posts/new-note.md', '   ') && !core.isBlankPost('notes/new-note.md', ''), 'only blank posts receive the automatic template');
   check(read(pluginPath).includes('onLayoutReady') && read(pluginPath).includes("addCommand({") && read(pluginPath).includes("hotkeys: [{ modifiers: ['Mod'], key: 'n' }]") && read(pluginPath).includes("vault.on('create'"), 'the plugin must safely create and populate new post notes');
+
+  const Module = require('node:module');
+  const originalLoad = Module._load;
+  let activeModal;
+  class FuzzySuggestModal {
+    constructor(app) {
+      this.app = app;
+      activeModal = this;
+    }
+
+    setPlaceholder() {}
+    open() {}
+  }
+
+  Module._load = function loadWithObsidianApi(request, parent, isMain) {
+    if (request === 'obsidian') {
+      return {
+        FuzzySuggestModal,
+        MarkdownView: class MarkdownView {},
+        Notice: class Notice {},
+        Plugin: class Plugin {},
+        TFile: class TFile {},
+      };
+    }
+    return originalLoad.call(this, request, parent, isMain);
+  };
+
+  try {
+    const PluginClass = require(resolve(root, pluginPath));
+    const plugin = new PluginClass();
+    plugin.app = { vault: { getAbstractFileByPath: () => null } };
+    const selection = plugin.chooseCategory();
+    const review = activeModal.getItems().find((item) => item.id === 'review');
+    activeModal.onClose();
+    activeModal.onChooseItem(review);
+    const chosen = await selection;
+    check(chosen?.id === 'review', 'selecting a category must win when Obsidian closes the modal first');
+  } finally {
+    Module._load = originalLoad;
+  }
 }
 
 if (failures.length > 0) {

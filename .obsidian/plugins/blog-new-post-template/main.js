@@ -50,7 +50,9 @@ class CategorySuggestModal extends FuzzySuggestModal {
   }
 
   onClose() {
-    if (!this.didChoose) this.onChoose(null);
+    setTimeout(() => {
+      if (!this.didChoose) this.onChoose(null);
+    }, 0);
   }
 }
 
