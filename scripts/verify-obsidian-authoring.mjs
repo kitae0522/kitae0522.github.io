@@ -19,8 +19,9 @@ const templatePath = 'templates/blog-post.md';
 const pluginPath = '.obsidian/plugins/blog-new-post-template/main.js';
 const manifestPath = '.obsidian/plugins/blog-new-post-template/manifest.json';
 const corePath = '.obsidian/plugins/blog-new-post-template/plugin-core.cjs';
+const pluginPackagePath = '.obsidian/plugins/blog-new-post-template/package.json';
 
-for (const path of [appPath, pluginsPath, hotkeysPath, templatePath, pluginPath, manifestPath, corePath, 'src/content/images/.gitkeep']) {
+for (const path of [appPath, pluginsPath, hotkeysPath, templatePath, pluginPath, manifestPath, corePath, pluginPackagePath, 'src/content/images/.gitkeep']) {
   check(existsSync(resolve(root, path)), `${path} must exist`);
 }
 
@@ -29,6 +30,7 @@ if (failures.length === 0) {
   const plugins = readJson(pluginsPath);
   const hotkeys = readJson(hotkeysPath);
   const manifest = readJson(manifestPath);
+  const pluginPackage = readJson(pluginPackagePath);
   const core = require(resolve(root, corePath));
   const rendered = core.renderTemplate('2026-08-04');
 
@@ -41,6 +43,7 @@ if (failures.length === 0) {
     'Cmd+N must trigger the blog new-post command',
   );
   check(manifest.id === 'blog-new-post-template', 'the template plugin manifest must use the configured id');
+  check(pluginPackage.type === 'commonjs', 'the local Obsidian plugin must remain CommonJS inside Astro projects');
   check(read(templatePath).includes('{{date}}') && read(templatePath).includes('published: false'), 'the editable post template must include date and draft defaults');
   check(rendered.includes('date: 2026-08-04') && rendered.includes('category: other') && !rendered.includes('{{date}}'), 'new posts must receive a dated frontmatter snippet');
   check(core.isBlankPost('src/content/posts/new-note.md', '   ') && !core.isBlankPost('notes/new-note.md', ''), 'only blank posts receive the automatic template');
