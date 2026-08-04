@@ -1,5 +1,4 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
-import { spawnSync } from 'node:child_process';
 import { createInterface } from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { basename, join, resolve } from 'node:path';
@@ -19,15 +18,13 @@ const categories = [
 ];
 
 const argumentsMap = new Map();
-const flags = new Set();
 for (let index = 2; index < process.argv.length; index += 1) {
   const argument = process.argv[index];
   if (!argument.startsWith('--')) continue;
 
   const key = argument.slice(2);
   const value = process.argv[index + 1];
-  if (!value || value.startsWith('--')) flags.add(key);
-  else {
+  if (value && !value.startsWith('--')) {
     argumentsMap.set(key, value);
     index += 1;
   }
@@ -86,7 +83,7 @@ const createPost = async () => {
     const title = reader
       ? await requiredAnswer(reader, '제목: ', option('title'))
       : option('title');
-    if (!title) throw new Error('--title이 필요합니다. Orca Terminal에서는 인자 없이 실행해도 됩니다.');
+    if (!title) throw new Error('--title이 필요합니다. Terminal에서는 인자 없이 실행해도 됩니다.');
 
     let category = option('category');
     if (reader && !category) {
@@ -117,10 +114,6 @@ const createPost = async () => {
 
     writeFileSync(postPath, content, 'utf8');
     console.log(`초안 생성: ${postPath}`);
-
-    if (!flags.has('no-open')) {
-      spawnSync('orca', ['file', 'open', postPath], { cwd: root, stdio: 'ignore' });
-    }
   } finally {
     reader?.close();
   }
