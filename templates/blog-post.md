@@ -1,7 +1,7 @@
 ---
 title: ""
 date: {{date}}
-category: other
+category: {{category}}
 tags: []
 published: false
 description: ""

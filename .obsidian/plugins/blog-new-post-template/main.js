@@ -1,11 +1,11 @@
-const { MarkdownView, Notice, Plugin, TFile } = require('obsidian');
+const { FuzzySuggestModal, MarkdownView, Notice, Plugin, TFile } = require('obsidian');
 
 const POSTS_FOLDER = 'src/content/posts/';
 const TEMPLATE_PATH = 'templates/blog-post.md';
 const DEFAULT_TEMPLATE = `---
 title: ""
 date: {{date}}
-category: other
+category: {{category}}
 tags: []
 published: false
 description: ""
@@ -13,8 +13,50 @@ description: ""
 
 `;
 
-const renderTemplate = (date, template = DEFAULT_TEMPLATE) => template.replaceAll('{{date}}', date);
+const CATEGORY_OPTIONS = [
+  { id: 'dev', label: '개발' },
+  { id: 'review', label: '리뷰' },
+  { id: 'retrospective', label: '회고' },
+  { id: 'investment', label: '투자' },
+  { id: 'daily', label: '일상' },
+  { id: 'thought', label: '생각' },
+  { id: 'career', label: '커리어' },
+  { id: 'other', label: '기타' },
+];
+
+const renderTemplate = (date, category = 'other', template = DEFAULT_TEMPLATE) => template
+  .replaceAll('{{date}}', date)
+  .replaceAll('{{category}}', category);
 const isBlankPost = (path, content) => path.startsWith(POSTS_FOLDER) && path.endsWith('.md') && content.trim().length === 0;
+
+class CategorySuggestModal extends FuzzySuggestModal {
+  constructor(app, onChoose) {
+    super(app);
+    this.onChoose = onChoose;
+    this.didChoose = false;
+  }
+
+  getItems() {
+    return CATEGORY_OPTIONS;
+  }
+
+  getItemText(item) {
+    return `${item.label} ${item.id}`;
+  }
+
+  renderSuggestion(item, element) {
+    element.setText(`${item.label} · ${item.id}`);
+  }
+
+  onChooseItem(item) {
+    this.didChoose = true;
+    this.onChoose(item);
+  }
+
+  onClose() {
+    if (!this.didChoose) this.onChoose(null);
+  }
+}
 
 module.exports = class BlogNewPostTemplatePlugin extends Plugin {
   onload() {
@@ -41,8 +83,16 @@ module.exports = class BlogNewPostTemplatePlugin extends Plugin {
     return file instanceof TFile ? this.app.vault.read(file) : DEFAULT_TEMPLATE;
   }
 
-  async contentForToday() {
-    return renderTemplate(this.today(), await this.loadTemplate());
+  async contentForToday(category = 'other') {
+    return renderTemplate(this.today(), category, await this.loadTemplate());
+  }
+
+  chooseCategory() {
+    return new Promise((resolve) => {
+      const modal = new CategorySuggestModal(this.app, resolve);
+      modal.setPlaceholder('카테고리 선택');
+      modal.open();
+    });
   }
 
   nextPostPath() {
@@ -58,7 +108,10 @@ module.exports = class BlogNewPostTemplatePlugin extends Plugin {
   }
 
   async createPost() {
-    const file = await this.app.vault.create(this.nextPostPath(), await this.contentForToday());
+    const category = await this.chooseCategory();
+    if (!category) return;
+
+    const file = await this.app.vault.create(this.nextPostPath(), await this.contentForToday(category.id));
     await this.app.workspace.getLeaf(false).openFile(file);
 
     const view = this.app.workspace.getActiveViewOfType(MarkdownView);

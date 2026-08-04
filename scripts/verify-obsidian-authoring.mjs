@@ -45,7 +45,12 @@ if (failures.length === 0) {
   check(manifest.id === 'blog-new-post-template', 'the template plugin manifest must use the configured id');
   check(pluginPackage.type === 'commonjs', 'the local Obsidian plugin must remain CommonJS inside Astro projects');
   check(!read(pluginPath).includes("require('./plugin-core.cjs')"), 'the Obsidian plugin must bundle its helpers into main.js');
+  const pluginSource = read(pluginPath);
+  const categoryIds = ['dev', 'review', 'retrospective', 'investment', 'daily', 'thought', 'career', 'other'];
+  check(pluginSource.includes('FuzzySuggestModal'), 'Cmd+N must offer a category picker before creating a post');
+  check(categoryIds.every((id) => pluginSource.includes(`id: '${id}'`)), 'the category picker must include all blog categories');
   check(read(templatePath).includes('{{date}}') && read(templatePath).includes('published: false'), 'the editable post template must include date and draft defaults');
+  check(read(templatePath).includes('category: {{category}}'), 'the editable post template must receive the selected category');
   check(rendered.includes('date: 2026-08-04') && rendered.includes('category: other') && !rendered.includes('{{date}}'), 'new posts must receive a dated frontmatter snippet');
   check(core.isBlankPost('src/content/posts/new-note.md', '   ') && !core.isBlankPost('notes/new-note.md', ''), 'only blank posts receive the automatic template');
   check(read(pluginPath).includes('onLayoutReady') && read(pluginPath).includes("addCommand({") && read(pluginPath).includes("hotkeys: [{ modifiers: ['Mod'], key: 'n' }]") && read(pluginPath).includes("vault.on('create'"), 'the plugin must safely create and populate new post notes');
