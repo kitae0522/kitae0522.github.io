@@ -604,6 +604,25 @@ svg {
   font-size: 0.82em;
 }
 
+.post-content .mermaid-diagram {
+  overflow-x: auto;
+  margin-block: 25px 0;
+  padding-block: 8px;
+  text-align: center;
+}
+
+.post-content .mermaid-diagram svg {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+
+.post-content pre[data-mermaid][data-mermaid-error='true'] {
+  border-color: var(--accent);
+}
+
 .post-content hr {
   border: 0;
   border-top: 1px solid var(--rule);

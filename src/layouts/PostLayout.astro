@@ -73,3 +73,9 @@ const formatDate = (value: Date) => value.toISOString().slice(0, 10).replaceAll(
     </nav>
   </article>
 </BaseLayout>
+
+<script>
+  import { renderMermaidBlocks } from '../scripts/render-mermaid.mjs';
+
+  void renderMermaidBlocks();
+</script>
