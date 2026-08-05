@@ -4,6 +4,7 @@ export const MERMAID_CONFIG = {
   startOnLoad: false,
   securityLevel: 'strict',
   theme: 'base',
+  suppressErrorRendering: true,
   fontFamily: '"Pretendard Variable", Pretendard, sans-serif',
 };
 
@@ -35,8 +36,8 @@ export async function renderMermaidBlocks({
       const id = `mermaid-diagram-${++diagramSequence}`;
       const { svg, bindFunctions } = await mermaid.render(id, source);
       container.innerHTML = svg;
-      block.replaceWith(container);
       bindFunctions?.(container);
+      block.replaceWith(container);
       rendered += 1;
     } catch (error) {
       block.dataset.mermaidError = 'true';

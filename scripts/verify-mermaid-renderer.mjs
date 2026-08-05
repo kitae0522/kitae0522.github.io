@@ -65,9 +65,39 @@ assert.deepEqual(validResult, { rendered: 1, failed: 0 });
 assert.equal(initializedWith.startOnLoad, false);
 assert.equal(initializedWith.securityLevel, 'strict');
 assert.equal(initializedWith.theme, 'base');
+assert.equal(initializedWith.suppressErrorRendering, true);
 assert.match(initializedWith.fontFamily, /Pretendard/);
 assert.equal(validBlock.replacement.className, 'mermaid-diagram');
 assert.match(validBlock.replacement.innerHTML, /<svg/);
+
+const bindingFailureBlock = createBlock('graph TD\n  A --> B');
+let bindingError;
+const bindingFailureResult = await renderMermaidBlocks({
+  root: { querySelectorAll: () => [bindingFailureBlock] },
+  loadMermaid: async () => ({
+    initialize() {},
+    async render() {
+      return {
+        svg: '<svg aria-label="diagram"></svg>',
+        bindFunctions() {
+          throw new Error('bind failed');
+        },
+      };
+    },
+  }),
+  createContainer,
+  reportError(error) {
+    bindingError = error;
+  },
+});
+assert.deepEqual(bindingFailureResult, { rendered: 0, failed: 1 });
+assert.equal(
+  bindingFailureBlock.replacement,
+  undefined,
+  'Binding failure must leave the original source block in place',
+);
+assert.equal(bindingFailureBlock.dataset.mermaidError, 'true');
+assert.equal(bindingError.message, 'bind failed');
 
 const invalidBlock = createBlock('not a valid Mermaid diagram');
 let reportedError;
