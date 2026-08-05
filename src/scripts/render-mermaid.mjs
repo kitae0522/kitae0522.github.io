@@ -10,6 +10,15 @@ export const MERMAID_CONFIG = {
 
 let diagramSequence = 0;
 
+function markMermaidBlockFailed(block, index) {
+  block.dataset.mermaidError = 'true';
+  block.setAttribute('role', 'status');
+  block.setAttribute(
+    'aria-label',
+    `Mermaid 다이어그램 ${index + 1} 렌더링 실패. 원본 코드.`,
+  );
+}
+
 export async function renderMermaidBlocks({
   root = globalThis.document,
   loadMermaid = async () => (await import('mermaid')).default,
@@ -19,8 +28,15 @@ export async function renderMermaidBlocks({
   const blocks = root ? [...root.querySelectorAll(MERMAID_SELECTOR)] : [];
   if (blocks.length === 0) return { rendered: 0, failed: 0 };
 
-  const mermaid = await loadMermaid();
-  mermaid.initialize(MERMAID_CONFIG);
+  let mermaid;
+  try {
+    mermaid = await loadMermaid();
+    mermaid.initialize(MERMAID_CONFIG);
+  } catch (error) {
+    blocks.forEach(markMermaidBlockFailed);
+    reportError(error);
+    return { rendered: 0, failed: blocks.length };
+  }
 
   let rendered = 0;
   let failed = 0;
@@ -43,12 +59,7 @@ export async function renderMermaidBlocks({
       rendered += 1;
     } catch (error) {
       if (containerInserted) container.replaceWith(block);
-      block.dataset.mermaidError = 'true';
-      block.setAttribute('role', 'status');
-      block.setAttribute(
-        'aria-label',
-        `Mermaid 다이어그램 ${index + 1} 렌더링 실패. 원본 코드.`,
-      );
+      markMermaidBlockFailed(block, index);
       reportError(error);
       failed += 1;
     }

@@ -33,6 +33,75 @@ function createBlock(source) {
   };
 }
 
+async function captureRendererOutcome(options) {
+  try {
+    return { result: await renderMermaidBlocks(options) };
+  } catch (error) {
+    return { error };
+  }
+}
+
+function assertFailedSourceBlock(block, index) {
+  assert.equal(block.replacement, undefined, 'Failed setup must keep the source block visible');
+  assert.equal(block.dataset.mermaidError, 'true');
+  assert.equal(block.attributes.role, 'status');
+  assert.equal(
+    block.attributes['aria-label'],
+    `Mermaid 다이어그램 ${index + 1} 렌더링 실패. 원본 코드.`,
+  );
+}
+
+const loaderFailureBlocks = [
+  createBlock('graph TD\n  A --> B'),
+  createBlock('graph TD\n  B --> C'),
+];
+const loaderError = new Error('load failed');
+const loaderReports = [];
+const loaderFailure = await captureRendererOutcome({
+  root: { querySelectorAll: () => loaderFailureBlocks },
+  loadMermaid: async () => {
+    throw loaderError;
+  },
+  reportError(error) {
+    loaderReports.push(error);
+  },
+});
+assert.equal(loaderFailure.error, undefined, 'Loader rejection must be handled');
+assert.deepEqual(loaderFailure.result, { rendered: 0, failed: loaderFailureBlocks.length });
+assert.deepEqual(loaderReports, [loaderError]);
+loaderFailureBlocks.forEach(assertFailedSourceBlock);
+
+const initializeFailureBlocks = [
+  createBlock('graph TD\n  A --> B'),
+  createBlock('graph TD\n  B --> C'),
+];
+const initializeError = new Error('initialize failed');
+const initializeReports = [];
+let initializeCalls = 0;
+const initializeFailure = await captureRendererOutcome({
+  root: { querySelectorAll: () => initializeFailureBlocks },
+  loadMermaid: async () => ({
+    initialize() {
+      initializeCalls += 1;
+      throw initializeError;
+    },
+    render() {
+      assert.fail('Mermaid must not render after initialization failure');
+    },
+  }),
+  reportError(error) {
+    initializeReports.push(error);
+  },
+});
+assert.equal(initializeFailure.error, undefined, 'Initialization rejection must be handled');
+assert.deepEqual(initializeFailure.result, {
+  rendered: 0,
+  failed: initializeFailureBlocks.length,
+});
+assert.deepEqual(initializeReports, [initializeError]);
+assert.equal(initializeCalls, 1);
+initializeFailureBlocks.forEach(assertFailedSourceBlock);
+
 function createContainer() {
   return {
     className: '',
