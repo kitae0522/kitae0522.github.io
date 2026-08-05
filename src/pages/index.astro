@@ -2,13 +2,13 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { categoryEntries, categoryLabels } from '../lib/categories';
+import { formatPostDate } from '../lib/post-date';
 
 const allPosts = await getCollection('posts', (post) => post.data.published);
 const sortedPosts = [...allPosts].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const base = import.meta.env.BASE_URL;
 const baseWithoutTrailingSlash = base.replace(/\/$/, '');
 const postsBase = baseWithoutTrailingSlash === '' ? '/posts' : `${baseWithoutTrailingSlash}/posts`;
-const formatDate = (date: Date) => date.toISOString().slice(0, 10).replaceAll('-', '.');
 const getReadingTime = (body: string | undefined) => Math.max(1, Math.ceil((body ?? '').trim().split(/\s+/).filter(Boolean).length / 200));
 const categoryFilters = [{ id: 'all', label: '전체' }, ...categoryEntries];
 ---
@@ -47,7 +47,7 @@ const categoryFilters = [{ id: 'all', label: '전체' }, ...categoryEntries];
                   <span aria-hidden="true">·</span>
                   <span>{getReadingTime(post.body)}분 읽기</span>
                   <span aria-hidden="true">·</span>
-                  <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+                  <time datetime={post.data.date.toISOString()}>{formatPostDate(post.data.date)}</time>
                 </div>
                 <h2 class="home-card__title">{post.data.title}</h2>
                 {post.data.description && <p class="home-card__summary">{post.data.description}</p>}

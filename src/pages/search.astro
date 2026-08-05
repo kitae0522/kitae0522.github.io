@@ -2,13 +2,13 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { categoryLabels } from '../lib/categories';
+import { formatPostDate } from '../lib/post-date';
 
 const allPosts = await getCollection('posts', (post) => post.data.published);
 const posts = [...allPosts].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const base = import.meta.env.BASE_URL;
 const baseWithoutTrailingSlash = base.replace(/\/$/, '');
 const postsBase = baseWithoutTrailingSlash === '' ? '/posts' : `${baseWithoutTrailingSlash}/posts`;
-const formatDate = (date: Date) => date.toISOString().slice(0, 10).replaceAll('-', '.');
 const getReadingTime = (body: string | undefined) => Math.max(1, Math.ceil((body ?? '').trim().split(/\s+/).filter(Boolean).length / 200));
 const getSearchValue = (post: (typeof posts)[number]) => [
   post.data.title,
@@ -48,7 +48,7 @@ const getSearchValue = (post: (typeof posts)[number]) => [
               <span aria-hidden="true">·</span>
               <span>{getReadingTime(post.body)}분 읽기</span>
               <span aria-hidden="true">·</span>
-              <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+              <time datetime={post.data.date.toISOString()}>{formatPostDate(post.data.date)}</time>
             </div>
             <h2 class="search-result__title">{post.data.title}</h2>
             {post.data.description && <p class="search-result__summary">{post.data.description}</p>}

@@ -191,6 +191,10 @@
   },
   "active": "b3907637ad0d589b",
   "lastOpenFiles": [
+    "src/lib/post-date.ts",
+    "scripts/verify-post-ordering.mjs",
+    "docs/superpowers/plans/2026-08-05-post-timestamp-ordering.md",
+    "docs/superpowers/specs/2026-08-05-post-timestamp-ordering-design.md",
     "src/content/posts/2026-08-04-001.md",
     "src/content/posts/2026-08-04-002.md",
     "dist/posts/2026-08-04-002/index.html",
@@ -202,7 +206,6 @@
     "dist/_astro/vennDiagram-T6HMQDX7.DUYG7jM_.js",
     "dist/_astro/treemap-6X3UGDF4.CdyGMWxG.js",
     "dist/_astro/treeView-QDETBFTQ.DNbEZZo_.js",
-    "dist/_astro/timeline-definition-Z64GVDOM.D_CZWYpR.js",
     "node_modules/katex/dist/README.md",
     "node_modules/dagre-d3-es/LICENSE.md",
     "node_modules/katex/contrib/mhchem/README.md",
@@ -226,9 +229,6 @@
     "node_modules/points-on-curve/README.md",
     "node_modules/points-on-path/README.md",
     "node_modules/rw/README.md",
-    "node_modules/@types/d3-chord/README.md",
-    "node_modules/@types/d3-array/README.md",
-    "node_modules/@types/d3-brush/README.md",
     "dist/favicon.svg",
     "Untitled.canvas"
   ]

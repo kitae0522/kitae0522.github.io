@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { categoryLabels, type PostCategory } from '../lib/categories';
+import { formatPostDate } from '../lib/post-date';
 
 type Frontmatter = {
   title: string;
@@ -29,7 +30,6 @@ const base = import.meta.env.BASE_URL;
 const baseWithoutTrailingSlash = base.replace(/\/$/, '');
 const homeHref = base.endsWith('/') ? base : `${base}/`;
 const postsBase = baseWithoutTrailingSlash === '' ? '/posts' : `${baseWithoutTrailingSlash}/posts`;
-const formatDate = (value: Date) => value.toISOString().slice(0, 10).replaceAll('-', '.');
 ---
 
 <BaseLayout title={title} description={description} pageKind="post">
@@ -47,7 +47,7 @@ const formatDate = (value: Date) => value.toISOString().slice(0, 10).replaceAll(
       <div class="post-metadata" aria-label="글 정보">
         {tags.length > 0 && <span class="post-tags">{tags.map((tag) => `#${tag}`).join(' · ')}</span>}
         {tags.length > 0 && <span class="post-metadata__separator" aria-hidden="true">·</span>}
-        <time datetime={date.toISOString()}>{formatDate(date)}</time>
+        <time datetime={date.toISOString()}>{formatPostDate(date)}</time>
       </div>
     </header>
 
