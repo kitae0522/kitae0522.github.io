@@ -435,7 +435,7 @@ Create `src/content/posts/mermaid-verification.md`:
 ---
 title: Mermaid 렌더링 검증
 date: 2026-08-05
-category: development
+category: dev
 tags:
   - mermaid
 published: true
