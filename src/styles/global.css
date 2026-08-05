@@ -606,14 +606,14 @@ svg {
 
 .post-content table {
   display: block;
-  width: min(1120px, calc(100vw - 64px));
-  margin-left: 50%;
+  width: 100%;
+  margin-left: 0;
   overflow-x: auto;
   border-collapse: collapse;
   font-size: 16px;
   line-height: 1.55;
   letter-spacing: -0.025em;
-  transform: translateX(-50%);
+  transform: none;
 }
 
 .post-content th,
