@@ -44,6 +44,19 @@ function createContainer() {
   };
 }
 
+function createAttachedBlock(source) {
+  const block = createBlock(source);
+  const parent = { child: block };
+
+  block.replaceWith = function replaceWith(value) {
+    assert.equal(parent.child, block);
+    parent.child = value;
+    this.replacement = value;
+  };
+
+  return { block, parent };
+}
+
 const validBlock = createBlock('graph TD\n  A --> B');
 let initializedWith;
 const validResult = await renderMermaidBlocks({
@@ -70,7 +83,11 @@ assert.match(initializedWith.fontFamily, /Pretendard/);
 assert.equal(validBlock.replacement.className, 'mermaid-diagram');
 assert.match(validBlock.replacement.innerHTML, /<svg/);
 
-const bindingFailureBlock = createBlock('graph TD\n  A --> B');
+const { block: bindingFailureBlock, parent: bindingParent } = createAttachedBlock(
+  'graph TD\n  A --> B',
+);
+let bindingContainer;
+let bindingSawAttached = false;
 let bindingError;
 const bindingFailureResult = await renderMermaidBlocks({
   root: { querySelectorAll: () => [bindingFailureBlock] },
@@ -80,21 +97,35 @@ const bindingFailureResult = await renderMermaidBlocks({
       return {
         svg: '<svg aria-label="diagram"></svg>',
         bindFunctions() {
+          bindingSawAttached = bindingParent.child === bindingContainer;
           throw new Error('bind failed');
         },
       };
     },
   }),
-  createContainer,
+  createContainer() {
+    bindingContainer = createContainer();
+    bindingContainer.replaceWith = function replaceWith(value) {
+      assert.equal(bindingParent.child, bindingContainer);
+      bindingParent.child = value;
+    };
+    return bindingContainer;
+  },
   reportError(error) {
     bindingError = error;
   },
 });
 assert.deepEqual(bindingFailureResult, { rendered: 0, failed: 1 });
+assert.equal(bindingSawAttached, true, 'Bindings must run while the diagram is attached');
+assert.equal(
+  bindingParent.child,
+  bindingFailureBlock,
+  'Binding failure must restore the original source block',
+);
 assert.equal(
   bindingFailureBlock.replacement,
-  undefined,
-  'Binding failure must leave the original source block in place',
+  bindingContainer,
+  'The source block must have been replaced before binding ran',
 );
 assert.equal(bindingFailureBlock.dataset.mermaidError, 'true');
 assert.equal(bindingError.message, 'bind failed');

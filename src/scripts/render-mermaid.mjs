@@ -32,14 +32,17 @@ export async function renderMermaidBlocks({
     container.setAttribute('role', 'img');
     container.setAttribute('aria-label', `Mermaid 다이어그램 ${index + 1}`);
 
+    let containerInserted = false;
     try {
       const id = `mermaid-diagram-${++diagramSequence}`;
       const { svg, bindFunctions } = await mermaid.render(id, source);
       container.innerHTML = svg;
-      bindFunctions?.(container);
       block.replaceWith(container);
+      containerInserted = true;
+      bindFunctions?.(container);
       rendered += 1;
     } catch (error) {
+      if (containerInserted) container.replaceWith(block);
       block.dataset.mermaidError = 'true';
       block.setAttribute('role', 'status');
       block.setAttribute(
