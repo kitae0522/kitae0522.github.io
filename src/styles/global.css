@@ -604,17 +604,45 @@ svg {
   font-size: 0.82em;
 }
 
+.post-content table {
+  display: block;
+  width: min(1120px, calc(100vw - 64px));
+  margin-left: 50%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 16px;
+  line-height: 1.55;
+  letter-spacing: -0.025em;
+  transform: translateX(-50%);
+}
+
+.post-content th,
+.post-content td {
+  padding: 12px 14px;
+  border: 1px solid var(--rule);
+  text-align: left;
+  vertical-align: top;
+}
+
+.post-content th {
+  background: var(--surface-subtle);
+  font-weight: 700;
+}
+
 .post-content .mermaid-diagram {
+  width: min(1120px, calc(100vw - 64px));
+  margin-left: 50%;
   overflow-x: auto;
   margin-block: 25px 0;
   padding-block: 8px;
   text-align: center;
+  transform: translateX(-50%);
 }
 
 .post-content .mermaid-diagram svg {
   display: block;
-  width: auto;
-  max-width: 100%;
+  width: 100%;
+  max-width: none;
   height: auto;
   margin-inline: auto;
 }
@@ -862,6 +890,24 @@ svg {
 
   .post-content h4 {
     font-size: 19px;
+  }
+
+  .post-content table {
+    width: 100%;
+    margin-left: 0;
+    white-space: nowrap;
+    transform: none;
+  }
+
+  .post-content th,
+  .post-content td {
+    padding: 10px 12px;
+  }
+
+  .post-content .mermaid-diagram {
+    width: 100%;
+    margin-left: 0;
+    transform: none;
   }
 
   .post-pagination {
