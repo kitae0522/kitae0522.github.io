@@ -15,7 +15,7 @@ Avoid paper textures, warm neutrals, decorative imagery, cards, and visual effec
 
 ## Global rules
 
-- Use `"Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif` for every text role. Load Pretendard Variable from the pinned v1.3.9 stylesheet so visitors do not depend on a locally installed font.
+- Use `"Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif` for every prose and UI text role. Load Pretendard Variable from the pinned v1.3.9 stylesheet so visitors do not depend on a locally installed font. Code is the exception: use JetBrains Mono (SIL OFL 1.1) for `code` and `pre`, with Symbols Nerd Font Mono as a Private Use Area fallback so terminal glyphs do not tofu.
 - Light-only product. Do not add a dark theme, theme toggle, or `prefers-color-scheme` switch.
 - Every route uses a white reading canvas. Do not add a gray page frame or a card surface behind the article list.
 - Use `#e84057` only for category markers, active states, and text-link decoration. Do not use it as a large background, gradient, or text color for body copy.
@@ -64,7 +64,7 @@ Use restrained display tracking only for headings: `letter-spacing: -0.045em` fo
 - Show category/read-time on one line, then textual tags/date on one wrapping metadata line. Do not repeat reading time.
 - Keep the post header compact: 24px after the back link, 28px before the divider, and 36px before content. Section headings use 40px desktop / 32px mobile top spacing.
 - Paragraph gap: 25px desktop and 22px mobile.
-- Blockquotes have a 2px `#e84057` left rule. Lists use small `#e84057` markers. Code blocks are neutral gray with horizontal scrolling.
+- Blockquotes have a 2px `#e84057` left rule. Lists use small `#e84057` markers. Code blocks stay on the neutral gray surface with square corners and horizontal scrolling. Highlight them with Astro's bundled Shiki `github-light` theme; do not strip token colors, add a dark code island, or extra chrome such as copy buttons and language tabs.
 
 ## Accessibility and responsive behavior
 

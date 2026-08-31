@@ -9,6 +9,7 @@ export default defineConfig({
   site: 'https://kitae0522.github.io',
   markdown: {
     shikiConfig: {
+      theme: 'github-light',
       transformers: [mermaidCodeTransformer],
     },
   },

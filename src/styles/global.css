@@ -9,6 +9,16 @@
   --surface-subtle: #f7f7f8;
   --accent: #e84057;
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "Symbols Nerd Font Mono", "Pretendard Variable", Pretendard, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@font-face {
+  font-family: "Symbols Nerd Font Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/npm/nerdfonts-web@1.0.1/Symbols-2048-em%20Nerd%20Font%20Complete.woff2") format("woff2");
+  unicode-range: U+23FB-23FE, U+2665, U+26A1, U+2B58, U+E000-F8FF, U+F0000-F1AFF;
 }
 
 * {
@@ -498,6 +508,69 @@ svg {
   margin-top: 0;
 }
 
+.post-content .series-toc {
+  margin: 0 0 40px;
+  padding: 20px 0;
+  border-block: 1px solid var(--rule);
+}
+
+.post-content .series-toc__title {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.post-content .series-toc ol {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post-content .series-toc li + li {
+  margin-top: 6px;
+}
+
+.post-content .series-toc a {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 8px;
+  padding: 3px 0;
+  color: var(--muted);
+  line-height: 1.55;
+  text-decoration: none;
+}
+
+.post-content .series-toc a:hover {
+  color: var(--ink);
+}
+
+.post-content .series-toc a > span {
+  color: var(--quiet);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+.post-content .series-toc a[aria-current='page'] {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.post-content .series-toc a[aria-current='page'] > span {
+  color: var(--accent);
+}
+
+.post-content .series-toc em {
+  color: var(--accent);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 .post-content p,
 .post-content ul,
 .post-content ol,
@@ -572,8 +645,10 @@ svg {
 }
 
 .post-content code {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-size: 0.88em;
+  font-variant-ligatures: none;
+  letter-spacing: 0;
 }
 
 .post-content :not(pre) > code {
@@ -588,16 +663,17 @@ svg {
   border: 1px solid var(--rule);
   background: var(--surface-subtle);
   line-height: 1.65;
+  font-variant-ligatures: none;
+  letter-spacing: 0;
 }
 
 .post-content pre[class*="astro-code"] {
   background: var(--surface-subtle) !important;
-  color: var(--ink) !important;
+  color: var(--ink);
 }
 
 .post-content pre[class*="astro-code"] span {
   background: transparent !important;
-  color: inherit !important;
 }
 
 .post-content pre code {
@@ -859,6 +935,22 @@ svg {
     margin-top: 32px;
     font-size: 17px;
     line-height: 1.82;
+  }
+
+  .post-content .series-toc {
+    margin-bottom: 32px;
+    padding-block: 18px;
+  }
+
+  .post-content .series-toc a {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 6px;
+    padding-block: 5px;
+  }
+
+  .post-content .series-toc em {
+    grid-column: 2;
+    margin-top: -4px;
   }
 
   .post-content p,
