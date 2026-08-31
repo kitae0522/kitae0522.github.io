@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "src/content/posts/2026-08-22-001.md",
+                "file": "src/content/posts/2026-08-31-005.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2026-08-22-001"
+              "title": "2026-08-31-005"
             }
           },
           {
@@ -215,28 +215,33 @@
   },
   "active": "3b4dec5e7307de6e",
   "lastOpenFiles": [
-    "dist/_astro/Screenshot 2026-08-22 at 16.18.19.BWtKXAbH_2r4ace.webp",
-    "dist/_astro/Screenshot 2026-08-18 at 00.13.19.CnMn42iS_Z2svN69.webp",
+    "src/content/posts/2026-08-31-004.md",
+    "src/content/posts/2026-08-31-003.md",
+    "src/content/posts/2026-08-31-002.md",
+    "src/content/posts/2026-08-31-001.md",
     "dist/_astro/Screenshot_2026-07-30_at_14.11.32.BI9ON9vj_Zj1IKx.webp",
+    "dist/_astro/Screenshot 2026-08-18 at 00.13.19.CnMn42iS_Z2svN69.webp",
     "dist/_astro/Screenshot_2026-07-30_at_14.11.27.CCY0OnJZ_1cauL5.webp",
+    "dist/_astro/Screenshot 2026-08-22 at 16.18.19.BWtKXAbH_2r4ace.webp",
     "dist/index.html",
     "dist/search/index.html",
+    "dist/search",
     "dist/rss.xml",
-    "dist/posts/2026-08-04-001/index.html",
-    "dist/posts/2026-08-17-001/index.html",
+    "dist/posts/2026-08-31-003/index.html",
+    "dist/posts/2026-08-31-003",
+    "dist/posts/2026-08-31-004/index.html",
+    "dist/posts/2026-08-31-004",
     "dist/about/index.html",
     "dist/about",
-    "dist/_astro/BaseLayout.BoisG_5R.css",
-    "dist/_astro/xychartDiagram-ELKLHX3M.CW1iFlKU.js",
-    "dist/_astro/wardleyDiagram-T6FBY63Y.M2wxeKrp.js",
+    "src/content/posts/2026-08-31-005.md",
     "dist/_astro/Screenshot_2026-07-30_at_14.11.32.BI9ON9vj.png",
     "dist/_astro/Screenshot_2026-07-30_at_14.11.27.CCY0OnJZ.png",
     "dist/_astro/Screenshot 2026-08-22 at 16.18.19.BWtKXAbH.png",
     "dist/_astro/Screenshot 2026-08-18 at 00.13.19.CnMn42iS.png",
-    "src/content/posts/2026-08-04-002.md",
     "src/content/posts/2026-08-22-001.md",
+    "dist/favicon.svg",
+    "src/content/posts/2026-08-04-002.md",
     "src/content/images/Screenshot 2026-08-22 at 16.18.19.png",
-    "src/content/images/Screenshot_2026-07-30_at_14.11.32.png",
     "src/content/posts/2026-08-17-001.md",
     "src/content/posts/2026-08-05-001.md",
     "src/content/posts/2026-08-04-001.md",
@@ -255,11 +260,6 @@
     "node_modules/khroma/readme.md",
     "node_modules/d3-dsv/node_modules/commander/CHANGELOG.md",
     "node_modules/internmap/README.md",
-    "node_modules/es-toolkit/README.md",
-    "node_modules/safer-buffer/Readme.md",
-    "node_modules/@iconify/types/README.md",
-    "node_modules/hachure-fill/README.md",
-    "node_modules/d3-sankey/node_modules/d3-path/README.md",
     "Untitled.canvas"
   ]
 }
