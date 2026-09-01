@@ -10,6 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "verify:links": "astro build && node scripts/verify-link-styles.mjs",
     "verify:mermaid": "node scripts/verify-mermaid-transformer.mjs && node scripts/verify-mermaid-renderer.mjs"
   },
   "dependencies": {
