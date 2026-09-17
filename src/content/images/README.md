@@ -25,7 +25,7 @@ That last part shapes how I build. When a model sits in the middle of a product,
 
 - **Take the pen away from the model.** Writing the sentence and owning the fact should not be the same component.
 - **Candidates are not evidence.** Discovery and proof are different steps, and the product should say which one it did.
-- **If I can't operate it, I don't understand it.** Which is how a 16GB LG Gram ended up as a NixOS home server running four self-hosted GitHub Actions runners.
+- **If I can't operate it, I don't understand it.** Which is how a 16GB LG Gram ended up as a NixOS home server running three self-hosted GitHub Actions runners.
 
 #### 🛠 Tools I reach for
 
